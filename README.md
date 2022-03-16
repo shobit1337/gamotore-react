@@ -1,2 +1,1 @@
-# gamotore-spa
- 
+# gamotore-react
