@@ -1,14 +1,19 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
-import { Navbar, Footer } from "./components";
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import { Navbar, Footer, Header } from './components';
 
 const App = () => {
   return (
-    <>
-      <Navbar />
-      <Outlet />
+    <div className='bg-dark text-light'>
+      <Header />
+      <div className='container'>
+        <Navbar />
+        <main className='main-section'>
+          <Outlet />
+        </main>
+      </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
