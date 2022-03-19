@@ -1,4 +1,4 @@
-import { Response } from "miragejs";
+import { Response } from 'miragejs';
 
 /**
  * All the routes related to Product are present here.
