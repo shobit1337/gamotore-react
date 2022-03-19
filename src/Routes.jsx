@@ -34,6 +34,7 @@ const Routes = () => {
           <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
         </Route>
+
         <Route path="/forgot-password" element={<ForgetPasswordPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
