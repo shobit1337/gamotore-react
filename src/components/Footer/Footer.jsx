@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className='footer'>
       <div className='d-flex justify-between items-center text-lg'>
-        <span>
+        <span className='d-flex gap-xxs'>
           <a href='/'>
             <i className='fab fa-facebook-square'></i>
           </a>

@@ -29,7 +29,7 @@ const WishlistCard = () => {
           <div className='d-flex items-center gap-sm'>
             <button className='link text-dark-lighter'>Remove</button>
             <button className='btn btn-outlined btn-rounded btn-light btn-sm'>
-              ADD TO CART
+              MOVE TO CART
             </button>
           </div>
         </div>

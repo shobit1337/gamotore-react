@@ -40,14 +40,14 @@ const BrowseProductPage = () => {
           <Loader />
           {/* Pagination */}
           <div className='pagination'>
-            <button className='pagination-btn'>&laquo;</button>
-            <button className='pagination-btn'>1</button>
-            <button className='pagination-btn active'>2</button>
-            <button className='pagination-btn'>3</button>
-            <button className='pagination-btn'>4</button>
-            <button className='pagination-btn'>5</button>
-            <button className='pagination-btn'>6</button>
-            <button className='pagination-btn'>&raquo;</button>
+            <span className='pagination-btn'>&laquo;</span>
+            <span className='pagination-btn'>1</span>
+            <span className='pagination-btn active'>2</span>
+            <span className='pagination-btn'>3</span>
+            <span className='pagination-btn'>4</span>
+            <span className='pagination-btn'>5</span>
+            <span className='pagination-btn'>6</span>
+            <span className='pagination-btn'>&raquo;</span>
           </div>
         </div>
         <Filters />

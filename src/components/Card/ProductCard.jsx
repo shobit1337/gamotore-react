@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ProductCard = () => {
   return (
-    <a href='/pages/product.html' className='product-card'>
+    <Link to='/product' className='product-card'>
       <div className='product-card-image'>
         <div className='product-card-overlay'>
           <i className='fas fa-plus-circle'></i>
@@ -21,7 +22,7 @@ const ProductCard = () => {
           <span className='current-price'>₹1499.50</span>
         </p>
       </div>
-    </a>
+    </Link>
   );
 };
 
