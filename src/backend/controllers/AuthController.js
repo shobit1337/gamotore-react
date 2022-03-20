@@ -1,8 +1,8 @@
-import { v4 as uuid } from "uuid";
-import { Response } from "miragejs";
-import { formatDate } from "../utils/authUtils";
-import bcrypt from "bcryptjs";
-const jwt = require("jsonwebtoken");
+import { v4 as uuid } from 'uuid';
+import { Response } from 'miragejs';
+import { formatDate } from '../utils/authUtils';
+import bcrypt from 'bcryptjs';
+const jwt = require('jsonwebtoken');
 
 /**
  * All the routes related to Auth are present here.
@@ -25,7 +25,7 @@ export const signupHandler = function (schema, request) {
         422,
         {},
         {
-          errors: ["Unprocessable Entity. Email Already Exists."],
+          errors: ['Unprocessable Entity. Email Already Exists.'],
         }
       );
     }
@@ -72,7 +72,7 @@ export const loginHandler = function (schema, request) {
       return new Response(
         404,
         {},
-        { errors: ["The email you entered is not Registered. Not Found error"] }
+        { errors: ['The email you entered is not Registered. Not Found error'] }
       );
     }
     if (bcrypt.compareSync(password, foundUser.password)) {
@@ -88,7 +88,7 @@ export const loginHandler = function (schema, request) {
       {},
       {
         errors: [
-          "The credentials you entered are invalid. Unauthorized access error.",
+          'The credentials you entered are invalid. Unauthorized access error.',
         ],
       }
     );
