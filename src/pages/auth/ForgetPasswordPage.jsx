@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ForgetPasswordPage = () => {
   return (
@@ -18,21 +19,21 @@ const ForgetPasswordPage = () => {
         <button className='btn btn-rounded text-light'>RESET</button>
         <span>
           Have an account?
-          <a className='text-light' href='/pages/forgot-password.html'>
+          <Link to='/login' className='text-light'>
             Sign In
-          </a>
+          </Link>
         </span>
         <span>
           Don't have a Gamotore Account?
-          <a className='text-light' href='/pages/sign-up.html'>
+          <Link to='/signup' className='text-light'>
             Sign Up
-          </a>
+          </Link>
         </span>
         <span>
           Back to{' '}
-          <a className='text-light' href='/'>
+          <Link to='/' className='text-light'>
             Store
-          </a>
+          </Link>
         </span>
       </div>
     </div>

@@ -5,10 +5,10 @@ const ProductPage = () => {
   return (
     <>
       <h1 className='product-title border-top py-sm'>Cyberpunk 2077</h1>
-      {/* <div className='product-nav'>
-        <a href='#'>Overview</a>
-        <a href='#'>Achievements</a>
-      </div> */}
+      <div className='product-nav'>
+        <a href='/'>Overview</a>
+        <a href='/'>Achievements</a>
+      </div>
       <div className='product-container'>
         <div className='product-page-details'>
           <ProductShowcase />

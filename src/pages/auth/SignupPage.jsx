@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const SignupPage = () => {
   return (
@@ -56,15 +57,15 @@ const SignupPage = () => {
 
         <span>
           Have a Gamotore Account?
-          <a className='text-light' href='/pages/sign-in.html'>
+          <Link to='/login' className='text-light'>
             Sign In
-          </a>
+          </Link>
         </span>
         <span>
           Back to{' '}
-          <a className='text-light' href='/'>
+          <Link to='/signup' className='text-light'>
             Store
-          </a>
+          </Link>
         </span>
       </div>
     </div>
