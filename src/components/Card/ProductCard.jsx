@@ -17,7 +17,7 @@ const ProductCard = () => {
         <div className='product-card-title'>Riders Republic</div>
         <p>
           {' '}
-          <div className='badge discound-badge'>-50%</div>{' '}
+          <span className='badge discound-badge'>-50%</span>{' '}
           <span className='mrp-price'>₹2,999</span>{' '}
           <span className='current-price'>₹1499.50</span>
         </p>
