@@ -21,6 +21,8 @@ import {
   SignupPage,
 } from './pages';
 
+import { AuthRoute, PrivateRoute } from './components';
+
 const Routes = () => {
   return (
     <Router>
@@ -29,14 +31,21 @@ const Routes = () => {
           <Route index element={<HomePage />} />
           <Route path='/browse' element={<BrowseProductPage />} />
           <Route path='/product/:productId' element={<ProductPage />} />
-          <Route path='/profile' element={<ProfilePage />} />
           <Route path='/cart' element={<CartPage />} />
           <Route path='/cart/:cartId' element={<CartPage />} />
           <Route path='/wishlist' element={<WishlistPage />} />
-          <Route path='/checkout' element={<CheckoutPage />} />
+
+          <Route element={<PrivateRoute />}>
+            <Route path='/checkout' element={<CheckoutPage />} />
+            <Route path='/profile' element={<ProfilePage />} />
+          </Route>
+        </Route>
+        <Route element={<AuthRoute />}>
+          <Route path='/signup' element={<SignupPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/forgot-password' element={<ForgetPasswordPage />} />
         </Route>
 
-        <Route path='/forgot-password' element={<ForgetPasswordPage />} />
         <Route path='/mockman' element={<Mockman />} />
       </RoutesContainer>
     </Router>

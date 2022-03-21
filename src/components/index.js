@@ -7,3 +7,5 @@ export { default as CartCard } from './Card/CartCard';
 export { default as CategoryCard } from './Card/CategoryCard';
 export { default as ProductCard } from './Card/ProductCard';
 export { default as WishlistCard } from './Card/WishlistCard';
+export { default as PrivateRoute } from './PrivateRoute/PrivateRoute';
+export { default as AuthRoute } from './AuthRoute/AuthRoute';
