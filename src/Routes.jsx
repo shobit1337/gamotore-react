@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 
 import App from './App';
+import Mockman from 'mockman-js';
 
 import {
   HomePage,
@@ -36,8 +37,7 @@ const Routes = () => {
         </Route>
 
         <Route path='/forgot-password' element={<ForgetPasswordPage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/signup' element={<SignupPage />} />
+        <Route path='/mockman' element={<Mockman />} />
       </RoutesContainer>
     </Router>
   );
