@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/auth-context';
+import { logout } from '../../store/auth/actions';
 
 const Header = () => {
+  const { user, dispatchAuth } = useAuth();
   return (
     <header className=''>
       <nav>
@@ -24,18 +27,27 @@ const Header = () => {
             <span className='nav-item'>
               <i className='fas fa-globe'></i>
             </span>
-            <Link to='/profile' className='nav-item'>
-              <i className='fas fa-user mr-xxxs'></i>User
-            </Link>
-            <Link to='' className='nav-item'>
-              <i className='fas fa-sign-out-alt mr-xxxs'></i>LOG OUT
-            </Link>
-            <Link to='/login' className='nav-item'>
-              <i className='fas fa-sign-out-alt mr-xxxs'></i>LOGIN
-            </Link>
-            <Link to='/signup' className='nav-item'>
-              <i className='fas fa-sign-out-alt mr-xxxs'></i>SIGN UP
-            </Link>
+            {user.userDetails ? (
+              <>
+                <Link to='/profile' className='nav-item'>
+                  <i className='fas fa-user mr-xxxs'></i>User
+                </Link>
+                <span
+                  className='nav-item'
+                  onClick={(e) => logout(dispatchAuth)}>
+                  <i className='fas fa-sign-out-alt mr-xxxs'></i>LOG OUT
+                </span>
+              </>
+            ) : (
+              <>
+                <Link to='/login' className='nav-item'>
+                  <i className='fas fa-sign-out-alt mr-xxxs'></i>LOGIN
+                </Link>
+                <Link to='/signup' className='nav-item'>
+                  <i className='fas fa-sign-out-alt mr-xxxs'></i>SIGN UP
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </nav>
