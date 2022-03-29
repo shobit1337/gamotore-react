@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid';
 import bcyrpt from 'bcryptjs';
 import { formatDate } from '../utils/authUtils';
 /**
@@ -9,7 +8,7 @@ import { formatDate } from '../utils/authUtils';
 
 export const users = [
   {
-    _id: uuid(),
+    _id: '115da28e-3cb4-40e2-b6e8-5f791b33b932',
     firstName: 'Shobit',
     lastName: 'Deshwal',
     email: 'shobit@test.com',
@@ -17,25 +16,31 @@ export const users = [
     password: bcyrpt.hashSync('test', 5),
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    cart: [],
+    wishlist: [],
   },
   {
-    _id: uuid(),
+    _id: '06fa2f68-0b0a-469b-bcc3-e024a949995e',
+    firstName: 'Test',
+    lastName: 'Test',
+    email: 'test@test.com',
+    userName: 'testtest',
+    password: bcyrpt.hashSync('test', 5),
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+    cart: [],
+    wishlist: [],
+  },
+  {
+    _id: '9b21d331-f466-4b3e-863e-f6eb3954fa55',
     firstName: 'Test',
     lastName: 'One',
     email: 'test1@test.com',
     userName: 'test1',
-    password: bcyrpt.hashSync('test1', 5),
+    password: bcyrpt.hashSync('test', 5),
     createdAt: formatDate(),
     updatedAt: formatDate(),
-  },
-  {
-    _id: uuid(),
-    firstName: 'Test',
-    lastName: 'Two',
-    email: 'test2@test.com',
-    userName: 'test2',
-    password: bcyrpt.hashSync('test2', 5),
-    createdAt: formatDate(),
-    updatedAt: formatDate(),
+    cart: [],
+    wishlist: [],
   },
 ];
