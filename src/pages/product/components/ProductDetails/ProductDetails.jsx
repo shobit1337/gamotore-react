@@ -1,34 +1,49 @@
 import React from 'react';
 
-const ProductDetails = () => {
+const ProductDetails = ({ product }) => {
   return (
     <div className='product-page-card'>
-      <img
-        style={{ padding: '20px' }}
-        src='https://cdn2.unrealengine.com/egs-cyberpunk2077-cdprojektred-ic1-400x400-82b90aa9a275.png?h=270&resize=1&w=480'
-        alt=''
-      />
-      <div className='badge'>BASE GAME</div>
-      <span className='current-price'>$2,999</span>
+      <div className='product-page-logo'>
+        <img src={product.logoImage} alt='' />
+      </div>
+      {product.discount > 0 ? (
+        <span className='badge p-xxxxs discound-badge'>
+          -{product.discount}%
+        </span>
+      ) : null}
+      <div>
+        <span className={product.discount > 0 ? 'mrp-price' : null}>
+          $2,999
+        </span>
+        {product.discount > 0 ? (
+          <span className='current-price'>
+            {` ₹${((product.price / 100) * product.discount).toFixed(2)}`}
+          </span>
+        ) : null}
+      </div>
       <div className='btn btn-accient btn-rounded'>BUY NOW</div>
       <div className='btn btn-outlined btn-rounded'>ADD TO CART</div>
       <div className='btn btn-sm btn-outlined btn-rounded'>ADD TO WISHLIST</div>
       <div className='product-page-card-detail'>
         <span className='text-dark-light text-semibold'>Developer</span>
-        <span>CD PROJJECT RED</span>
+        <span>{product.publisher}</span>
       </div>
       <div className='product-page-card-detail'>
         <span className='text-dark-light text-semibold'>Publisher</span>
-        <span>CD PROJJECT RED</span>
+        <span>{product.publisher}</span>
       </div>
       <div className='product-page-card-detail'>
-        <span className='text-dark-light text-semibold'>Developer</span>
-        <span>12/10/20</span>
+        <span className='text-dark-light text-semibold'>Release Date</span>
+        <span>{product.releaseDate}</span>
       </div>
       <div className='product-page-card-detail'>
-        <span className='text-dark-light text-semibold'>Developer</span>
+        <span className='text-dark-light text-semibold'>Platform</span>
         <span>
-          <i className='fab fa-windows'></i>
+          {product.platform.includes('mac') || true ? ` MAC ` : null}
+
+          {product.platform.includes('windows') ? (
+            <i className='fab fa-windows'></i>
+          ) : null}
         </span>
       </div>
     </div>

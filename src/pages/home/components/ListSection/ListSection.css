@@ -1,0 +1,9 @@
+.category-list {
+  display: flex;
+  gap: var(--space-sm);
+  overflow: auto;
+  max-width: 100%;
+}
+.list-section {
+  margin: 0.5rem 0;
+}

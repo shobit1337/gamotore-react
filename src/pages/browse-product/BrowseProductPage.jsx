@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Filters, Loader, ProductCard } from '../../components';
+import { getAllProducts } from '../../utils/products';
 
 const BrowseProductPage = () => {
+  const [productList, setProductList] = useState([]);
+
+  useEffect(() => {
+    // Fetching the Products from Server and setting the state
+    (async () => {
+      const data = await getAllProducts();
+      setProductList([...data]);
+    })();
+
+    return () => {
+      setProductList([]);
+    };
+  }, []);
+
   return (
     <>
       <h4 className='cart-title border-top py-sm'>Browse</h4>
@@ -29,13 +44,13 @@ const BrowseProductPage = () => {
             </span>
           </div>
           <div className='product-listing'>
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            {productList.length ? (
+              productList.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))
+            ) : (
+              <div>No Product Found</div>
+            )}
           </div>
           <Loader />
           {/* Pagination */}

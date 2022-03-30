@@ -1,45 +1,65 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Loader } from '../../components';
+import { getProduct } from '../../utils/products';
 import { ProductDetails, ProductShowcase } from './components';
 
 const ProductPage = () => {
-  return (
+  const [productDetails, setProductDetails] = useState(null);
+  const { productId } = useParams();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (productId) {
+      (async () => {
+        const data = await getProduct(productId);
+        if (data) {
+          setProductDetails(data);
+        }
+      })();
+    } else {
+      navigate('/');
+    }
+
+    return () => {
+      setProductDetails(null);
+    };
+  }, [productId, navigate]);
+
+  return productDetails ? (
     <>
-      <h1 className='product-title border-top py-sm'>Cyberpunk 2077</h1>
+      <h1 className='product-title border-top py-sm'>{productDetails.title}</h1>
       <div className='product-nav'>
         <a href='/'>Overview</a>
         <a href='/'>Achievements</a>
       </div>
       <div className='product-container'>
         <div className='product-page-details'>
-          <ProductShowcase />
+          <ProductShowcase images={productDetails.largeImages} />
           {/* Product Description */}
           <>
-            <div>
-              Cyberpunk 2077 is an open-world, action-adventure RPG set in the
-              dark future of Night City — a dangerous megalopolis obsessed with
-              power, glamor, and ceaseless body modification.
-            </div>
             <div className='d-flex gap-md my-sm'>
               <span>
                 <div className='text-dark-light'>Genres</div>
-                <a href='/'> Action</a> <a href='/'>RPG</a>
-                <a href='/'>Open World</a> <a href='/'>Adventure</a>
+                {productDetails.categoryName.map((category, index) => (
+                  <span className='cursor-pointer pr-xxs pt-xxs' key={index}>
+                    {category}
+                  </span>
+                ))}
               </span>
               <span>
                 <div className='text-dark-light'>Features</div>
-                <a href='/'>Controller Support</a>,<a href='/'>Single Player</a>
+                <span className='cursor-pointer pr-xxs pt-xxs'>
+                  Controller Support
+                </span>
+
+                <span className='cursor-pointer pr-xxs pt-xxs'>
+                  Single Player
+                </span>
               </span>
             </div>
-            <div className='product-heading'>CYBERPUNK 2077</div>
+            <div className='product-heading'>{productDetails.title}</div>
             <div className='product-description'>
-              Cyberpunk 2077 is an open-world, action-adventure RPG set in the
-              megalopolis of Night City, where you play as a cyberpunk mercenary
-              wrapped up in a do-or-die fight for survival. Improved and
-              featuring all-new free additional content, customize your
-              character and playstyle as you take on jobs, build a reputation,
-              and unlock upgrades. The relationships you forge and the choices
-              you make will shape the story and the world around you. Legends
-              are made here. What will yours be?
+              {productDetails.description}
             </div>
             <div className='product-heading'>PLAY AS A MERCENARY OUTLAW</div>
             <div className='product-description'>
@@ -73,9 +93,11 @@ const ProductPage = () => {
             </div>
           </>
         </div>
-        <ProductDetails />
+        <ProductDetails product={productDetails} />
       </div>
     </>
+  ) : (
+    <Loader />
   );
 };
 

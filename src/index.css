@@ -83,7 +83,6 @@ header > nav {
   max-height: 46rem;
   border-radius: 2rem;
   overflow: hidden;
-  cursor: pointer;
 }
 
 .hero-image-overflow {
@@ -108,13 +107,17 @@ header > nav {
 }
 
 .hero-item {
-  padding: var(--space-xs);
+  padding: 1px var(--space-xs);
   border-radius: var(--space-md);
   height: 5rem;
   display: flex;
   gap: var(--space-xs);
   align-items: center;
   cursor: pointer;
+}
+
+.hero-list .active {
+  background-color: var(--dark-lighter);
 }
 
 .hero-item > img {
@@ -185,7 +188,8 @@ header > nav {
 }
 
 .product-card {
-  width: 14.3rem;
+  min-width: 14.25rem;
+  max-width: 14.25rem;
   height: 25rem;
   display: flex;
   flex-direction: column;
@@ -279,6 +283,12 @@ header > nav {
 .product-page-image {
   border-radius: var(--radius-md);
   overflow: hidden;
+}
+
+.product-page-logo {
+  min-height: var(--space-xxxxl);
+  display: flex;
+  align-items: center;
 }
 
 .product-page-card {
