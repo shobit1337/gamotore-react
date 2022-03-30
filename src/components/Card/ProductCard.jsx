@@ -1,28 +1,45 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const ProductCard = () => {
+const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
+
+  const handleAddToWishlist = (e) => {
+    e.stopPropagation();
+  };
   return (
-    <Link to='/product' className='product-card'>
+    <div
+      onClick={() => navigate(`/product/${product._id}`)}
+      className='product-card'>
       <div className='product-card-image'>
         <div className='product-card-overlay'>
-          <i className='fas fa-plus-circle'></i>
+          <i className='fas fa-plus-circle' onClick={handleAddToWishlist}></i>
         </div>
-        <img
-          src='https://cdn1.epicgames.com/salesEvent/salesEvent/EN_R6E_STD_EPIC_Store%20Portrait_1200x1600_UK_1200x1600-9859512196094e740761af80c09a41d6?h=854&resize=1&w=640'
-          alt='game'
-        />
+        <img src={product.thumbnailImage} alt='game' loading='lazy' />
       </div>
       <div className='product-card-main'>
-        <div className='product-card-title'>Riders Republic</div>
-        <p>
-          {' '}
-          <span className='badge discound-badge'>-50%</span>{' '}
-          <span className='mrp-price'>₹2,999</span>{' '}
-          <span className='current-price'>₹1499.50</span>
-        </p>
+        <div className='product-card-title'>{product.title}</div>
+        {product.price > 0 ? (
+          <p>
+            {product.discount > 0 ? (
+              <span className='badge discound-badge'>-{product.discount}%</span>
+            ) : null}
+            <span className={product.discount > 0 ? 'mrp-price' : null}>
+              ₹{product.price}
+            </span>{' '}
+            {product.discount > 0 ? (
+              <span className='current-price'>
+                ₹{((product.price / 100) * product.discount).toFixed(2)}
+              </span>
+            ) : null}
+          </p>
+        ) : (
+          <p>
+            <span className='badge discound-badge'>FREE</span>
+          </p>
+        )}
       </div>
-    </Link>
+    </div>
   );
 };
 

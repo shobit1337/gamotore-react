@@ -1,0 +1,23 @@
+.showcase-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.showcase-list {
+  display: flex;
+  gap: var(--space-sm);
+  overflow: auto;
+  max-width: 100%;
+  max-height: var(--space-xxl);
+  height: var(--space-xxl);
+  padding: var(--space-sm);
+}
+
+.showcase-list-image {
+  height: 90%;
+}
+.showcase-list-image-active {
+  height: 100%;
+  outline: 3px solid var(--light-color);
+}
