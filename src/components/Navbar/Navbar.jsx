@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../../context/cart-context';
 
 const Navbar = () => {
+  const {
+    cart: { totalQuantity },
+  } = useCart();
   return (
     <div className='sticky-header text-dark-light text-medium'>
       <div className='input-text-group'>
@@ -20,7 +24,11 @@ const Navbar = () => {
           <Link to='/wishlist'>Wishlist</Link>
           <Link to='/cart' className='text-light'>
             Cart
-            <span className='badge badge-accient'>1</span>
+            {totalQuantity > 0 ? (
+              <span className='badge badge-accient ml-xs p-xxxxs text-xs'>
+                {totalQuantity}
+              </span>
+            ) : null}
           </Link>
         </span>
       </div>

@@ -16,3 +16,6 @@ export const getProduct = async (productId) => {
   }
   return null;
 };
+
+export const getDiscountedPrice = (price, discount) =>
+  discount > 0 ? parseFloat(((price * discount) / 100).toFixed(2)) : price;

@@ -1,36 +1,77 @@
 import React from 'react';
+import { useAuth } from '../../context/auth-context';
+import { useCart } from '../../context/cart-context';
+import { getDiscountedPrice } from '../../utils/products';
 
-const CartCard = () => {
+const CartCard = ({
+  cart: { _id, title, discount, price, platform, thumbnailImage, quantity },
+}) => {
+  const { removeFromCart, updateCart } = useCart();
+  const {
+    user: { encodedToken },
+  } = useAuth();
   return (
-    <div className='cart-card'>
-      <img
-        src='https://cdn1.epicgames.com/spt-assets/7b69aea9b3404faaa461911f99b6cbbc/download-henchman-story-offer-iq9jq.png?h=1280&resize=1&w=960'
-        alt=''
-      />
+    <div className='cart-card flex-wrap'>
+      <img src={thumbnailImage} alt='' />
       <div className='d-flex flex-column justify-between flex-grow'>
-        <div className='d-flex justify-between'>
+        <div className='d-flex justify-between flex-wrap'>
           <div className='d-flex gap-xxxs flex-column'>
             <div className='badge'>BASE GAME</div>
-            <div className='product-name'>HENCHMAN STORY</div>
+            <div className='product-name'>{title}</div>
           </div>
 
           <div className='d-flex gap-xxxs flex-column'>
             <div className='d-flex items-center justify-between gap-sm'>
-              <span className='badge'>-33%</span>
-              <span className='mrp-price text-dark-lighter'>$349</span>
-              <span className='current-price'>$233.83</span>
+              {discount ? (
+                <>
+                  <span className='badge'>-{discount}%</span>
+                  <span className='mrp-price text-dark-lighter'>₹{price}</span>
+                  <span className='current-price'>
+                    ₹{getDiscountedPrice(price, discount)}
+                  </span>
+                </>
+              ) : (
+                <span className='current-price'>₹{price}</span>
+              )}
             </div>
             <span> Sale ends 3/4/2022 at 4:30 AM </span>
           </div>
         </div>
 
-        <div className='d-flex justify-between'>
-          <i className='fab fa-windows'></i>
-          <div className='d-flex items-center gap-sm'>
-            <span>
-              <i className='fas fa-plus-circle'></i> Move to wishlish
-            </span>
-            <span>Remove</span>
+        <div className='d-flex justify-between items-end'>
+          <span>
+            {' '}
+            {platform.includes('windows') ? (
+              <i className='fab fa-windows'></i>
+            ) : null}
+            {platform.includes('mac') ? <span> MAC</span> : null}
+          </span>
+          <div className='d-flex flex-column items-end gap-xs'>
+            <div className='d-flex items-center gap-sm'>
+              <span>
+                <i
+                  className='fas fa-minus-circle'
+                  onClick={() =>
+                    updateCart(encodedToken, _id, 'decrement')
+                  }></i>
+              </span>
+              <span>{quantity}</span>
+              <span>
+                <i
+                  className='fas fa-plus-circle'
+                  onClick={() =>
+                    updateCart(encodedToken, _id, 'increment')
+                  }></i>
+              </span>
+            </div>
+            <div className='d-flex items-center gap-sm'>
+              <span>Move to wishlish</span>
+              <span
+                className='cursor-pointer'
+                onClick={() => removeFromCart(encodedToken, _id)}>
+                Remove
+              </span>
+            </div>
           </div>
         </div>
       </div>
