@@ -23,7 +23,7 @@ export async function loginUser(dispatch, loginPayload) {
         encodedToken: data.encodedToken,
       };
       dispatch({ type: LOGIN, payload });
-      localStorage.setItem('currentUser', JSON.stringify(data));
+      localStorage.setItem('currentUser', JSON.stringify(payload));
       return data;
     }
 

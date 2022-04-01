@@ -1,19 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CartCard } from '../../components';
+import { useAuth } from '../../context/auth-context';
+import { useCart } from '../../context/cart-context';
 
 const CartPage = () => {
+  const {
+    cart: { cartItems, totalPrice, totalQuantity, totalDiscount },
+    clearCart,
+  } = useCart();
+
+  const {
+    user: { encodedToken },
+  } = useAuth();
   return (
     <>
       <h4 className='cart-title border-top py-sm d-flex justify-between items-center gap-xs'>
-        My Cart
+        My Cart {`( ${totalQuantity} Items )`}
       </h4>
 
       {/* Cart Container */}
       <div className='product-container'>
         <div className='cart-page-details'>
           <div className='d-flex justify-between items-center'>
-            <button className='text-sm btn btn-xs btn-outlined btn-rounded btn-light text-light d-flex flex-center gap-xs'>
+            <button
+              className='text-sm btn btn-xs btn-outlined btn-rounded btn-light text-light d-flex flex-center gap-xs'
+              onClick={() => clearCart(encodedToken)}>
               Empty Cart<i className='fab fa-dropbox'></i>
             </button>
             <button className='text-sm btn btn-xs btn-outlined btn-rounded btn-light text-light d-flex flex-center gap-xs'>
@@ -22,8 +34,9 @@ const CartPage = () => {
           </div>
 
           {/* Cart Items */}
-          <CartCard />
-          <CartCard />
+          {cartItems.length
+            ? cartItems.map((item) => <CartCard key={item._id} cart={item} />)
+            : null}
         </div>
 
         {/* Product Summary */}
@@ -31,36 +44,47 @@ const CartPage = () => {
           <div className='text-lg'>Games and Apps Summary</div>
           <div className='cart-page-card-detail'>
             <span className='text-dark-light text-semibold'>Price</span>
-            <span>₹3,348.00</span>
+            <span>₹{totalPrice}</span>
           </div>
-          <div className='cart-page-card-detail'>
-            <span className='text-dark-light text-semibold'>Sale Discount</span>
-            <span>-₹115.17</span>
-          </div>
-          <div className='cart-page-card-detail'>
-            <span className='text-dark-light text-semibold'>Coupon</span>
-            <div className='input-field-group'>
-              <input
-                type='text'
-                className='coupon-input'
-                placeholder='Enter coupon'
-              />
-              <button className='add-coupon text-primary text-xs link'>
-                ADD
-              </button>
+          {totalDiscount > 0 ? (
+            <div className='cart-page-card-detail'>
+              <span className='text-dark-light text-semibold'>
+                Sale Discount
+              </span>
+              <span>-₹{totalDiscount}</span>
             </div>
-          </div>
-          <div className='cart-page-card-detail'>
-            <span className='text-dark-light text-semibold'>Taxes</span>
-            <span>Calculated at Checkout</span>
-          </div>
+          ) : null}
+          {totalPrice > 0 ? (
+            <>
+              <div className='cart-page-card-detail'>
+                <span className='text-dark-light text-semibold'>Coupon</span>
+                <div className='input-field-group'>
+                  <input
+                    type='text'
+                    className='coupon-input'
+                    placeholder='Enter coupon'
+                  />
+                  <button className='add-coupon text-primary text-xs link'>
+                    ADD
+                  </button>
+                </div>
+              </div>
+
+              <div className='cart-page-card-detail'>
+                <span className='text-dark-light text-semibold'>Taxes</span>
+                <span>Calculated at Checkout</span>
+              </div>
+            </>
+          ) : null}
           <div className='cart-page-card-detail border-top'>
             <span className='text-dark-light text-semibold'>Subtotal</span>
-            <span>₹3,232.83</span>
+            <span>₹{(totalPrice - totalDiscount).toFixed(2)}</span>
           </div>
-          <Link to='/checkout' className='btn'>
-            CHECK OUT
-          </Link>
+          {totalQuantity > 0 ? (
+            <Link to='/checkout' className='btn'>
+              CHECK OUT
+            </Link>
+          ) : null}
         </div>
       </div>
     </>
