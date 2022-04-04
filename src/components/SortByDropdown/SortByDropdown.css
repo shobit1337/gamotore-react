@@ -1,0 +1,13 @@
+.select-dropdown{
+  background-color: transparent;
+  color: inherit;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1.1rem;
+}
+.select-dropdown > option{
+  font-weight: 200;
+  cursor: pointer !important;
+  background-color: var(--dark-light);
+}

@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Filters, Loader, ProductCard } from '../../components';
+import { Filters, Loader, ProductCard, SortByDropdown } from '../../components';
+import { useFilters } from '../../context/filter-context';
+import { filterList } from '../../utils/filters';
 import { getAllProducts } from '../../utils/products';
 
 const BrowseProductPage = () => {
+  const { filters } = useFilters();
   const [productList, setProductList] = useState([]);
+  const [filteredProduct, setFilteredProduct] = useState([]);
 
   useEffect(() => {
     // Fetching the Products from Server and setting the state
@@ -17,6 +21,16 @@ const BrowseProductPage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (filters.appliedFilters > 0 && productList.length > 0) {
+      setFilteredProduct(filterList(productList, filters));
+    }
+    if (filters.appliedFilters === 0) {
+      setFilteredProduct([]);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [productList, filters]);
+
   return (
     <>
       <h4 className='cart-title border-top py-sm'>Browse</h4>
@@ -26,31 +40,28 @@ const BrowseProductPage = () => {
         <div className='product-listing-container'>
           <div className='text-sm text-dark-lighter py-xs'>
             Sort By:
-            <span className='dropdown text-light'>
-              <span className='dropdown-title'>
-                {' '}
-                New Release <i className='fas fa-angle-down'></i>
-              </span>
-              <div className='dropdown-menu'>
-                <li className='list-item'>Relevance</li>
-                <li className='list-item dropdown-item-selected'>
-                  New Release
-                </li>
-                <li className='list-item'>Comming Soon</li>
-                <li className='list-item'>Alphabetical</li>
-                <li className='list-item'>Price: Low to High</li>
-                <li className='list-item'>Price: High to Low</li>
-              </div>
-            </span>
+            <SortByDropdown />
           </div>
           <div className='product-listing'>
-            {productList.length ? (
+            {filters.appliedFilters ? (
+              !!filteredProduct.length ? (
+                filteredProduct.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))
+              ) : (
+                <div>No Matched Product Found</div>
+              )
+            ) : !!productList.length ? (
               productList.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))
             ) : (
               <div>No Product Found</div>
             )}
+            <div className='empty-card'></div>
+            <div className='empty-card'></div>
+            <div className='empty-card'></div>
+            <div className='empty-card'></div>
           </div>
           <Loader />
           {/* Pagination */}
