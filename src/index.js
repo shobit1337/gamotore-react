@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AuthProvider } from './context/auth-context';
 import { CartProvider } from './context/cart-context';
+import { FiltersProvider } from './context/filter-context';
 import './index.css';
 import Routes from './Routes';
 import { makeServer } from './server';
@@ -12,9 +13,11 @@ makeServer();
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
-      <CartProvider>
-        <Routes />
-      </CartProvider>
+      <FiltersProvider>
+        <CartProvider>
+          <Routes />
+        </CartProvider>
+      </FiltersProvider>
     </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')

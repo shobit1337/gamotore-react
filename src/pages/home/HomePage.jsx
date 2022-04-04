@@ -15,7 +15,6 @@ const HomePage = () => {
       const categoriesData = await getAllCategories();
       setCategoryList([...categoriesData]);
     })();
-
     return () => {
       setCategoryList([]);
       setProductList([]);
