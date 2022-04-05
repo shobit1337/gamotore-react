@@ -1,5 +1,15 @@
 import { getDiscountedPrice } from '../products';
 
+export const getFromLocal = (name) => {
+  return localStorage.getItem(name)
+    ? JSON.parse(localStorage.getItem(name))
+    : [];
+};
+
+export const setToLocal = (name, data) => {
+  localStorage.setItem(name, JSON.stringify(data));
+};
+
 export const getCartInfo = (cart) => {
   return cart.reduce(
     (acc, curr) => {
@@ -42,4 +52,31 @@ export const getTotalDiscount = (cart) => {
       acc + (curr.price - getDiscountedPrice(curr.price, curr.discount)),
     0
   );
+};
+
+export const removeDuplicateProducts = (productList) => {
+  const hash = {};
+  // Saving Unique Values into hash,
+  productList.forEach((product) => {
+    if (!hash[product.id]) {
+      hash[product.id] = product;
+    } else {
+      if (product.quantity > hash[product.id].quantity) {
+        hash[product.id] = product;
+      }
+    }
+  });
+
+  return Object.values(hash);
+};
+export const filterDuplicates = (productList) => {
+  const hash = {};
+  // Returning filtered products using hash,
+  return productList.filter((product) => {
+    if (!hash[product.id]) {
+      hash[product.id] = true;
+      return true;
+    }
+    return false;
+  });
 };
