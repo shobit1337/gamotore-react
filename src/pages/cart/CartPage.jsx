@@ -2,13 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { CartCard } from '../../components';
 import { useAuth } from '../../context/auth-context';
-import { useCart } from '../../context/cart-context';
+import { useShop } from '../../context/shop-context';
 
 const CartPage = () => {
   const {
-    cart: { cartItems, totalPrice, totalQuantity, totalDiscount },
+    shop: {
+      cart: { cartItems, totalPrice, totalQuantity, totalDiscount },
+    },
     clearCart,
-  } = useCart();
+  } = useShop();
 
   const {
     user: { encodedToken },

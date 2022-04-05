@@ -37,6 +37,8 @@ export async function loginUser(dispatch, loginPayload) {
 export async function logout(dispatch) {
   dispatch({ type: LOGOUT });
   localStorage.removeItem('currentUser');
+  localStorage.removeItem('cartItems');
+  localStorage.removeItem('wishlistItems');
 }
 
 export async function signupUser(dispatch, loginPayload) {
