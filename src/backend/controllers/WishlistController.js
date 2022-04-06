@@ -28,6 +28,39 @@ export const getWishlistItemsHandler = function (schema, request) {
 };
 
 /**
+ * This handler handles setting items to user's wishlist.
+ * send POST Request at /api/user/wishlist/update
+ * body contains {products}
+ * */
+
+export const setToWishlistHandler = function (schema, request) {
+  const userId = requiresAuth.call(this, request);
+  try {
+    if (!userId) {
+      new Response(
+        404,
+        {},
+        {
+          errors: ['The email you entered is not Registered. Not Found error'],
+        }
+      );
+    }
+    const { products } = JSON.parse(request.requestBody);
+
+    this.db.users.update({ _id: userId }, { wishlist: products });
+    return new Response(201, {}, { wishlist: products });
+  } catch (error) {
+    return new Response(
+      500,
+      {},
+      {
+        error,
+      }
+    );
+  }
+};
+
+/**
  * This handler handles adding items to user's wishlist.
  * send POST Request at /api/user/wishlist
  * body contains {product}

@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useCart } from '../../context/cart-context';
+import { useShop } from '../../context/shop-context';
 
 const Navbar = () => {
   const {
-    cart: { totalQuantity },
-  } = useCart();
+    shop: {
+      cart: { totalQuantity },
+    },
+  } = useShop();
   return (
     <div className='sticky-header text-dark-light text-medium'>
       <div className='input-text-group'>

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AuthProvider } from './context/auth-context';
-import { CartProvider } from './context/cart-context';
 import { FiltersProvider } from './context/filter-context';
+import { ShopProvider } from './context/shop-context';
 import './index.css';
 import Routes from './Routes';
 import { makeServer } from './server';
@@ -14,9 +14,9 @@ ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
       <FiltersProvider>
-        <CartProvider>
+        <ShopProvider>
           <Routes />
-        </CartProvider>
+        </ShopProvider>
       </FiltersProvider>
     </AuthProvider>
   </React.StrictMode>,

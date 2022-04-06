@@ -27,6 +27,39 @@ export const getCartItemsHandler = function (schema, request) {
 };
 
 /**
+ * This handler handles setting items to user's cart.
+ * send POST Request at /api/user/cart/update
+ * body contains {products}
+ * */
+
+export const setToCartHandler = function (schema, request) {
+  const userId = requiresAuth.call(this, request);
+  try {
+    if (!userId) {
+      new Response(
+        404,
+        {},
+        {
+          errors: ['The email you entered is not Registered. Not Found error'],
+        }
+      );
+    }
+    const { products } = JSON.parse(request.requestBody);
+
+    this.db.users.update({ _id: userId }, { cart: products });
+    return new Response(201, {}, { cart: products });
+  } catch (error) {
+    return new Response(
+      500,
+      {},
+      {
+        error,
+      }
+    );
+  }
+};
+
+/**
  * This handler handles adding items to user's cart.
  * send POST Request at /api/user/cart
  * body contains {product}

@@ -1,12 +1,18 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../context/auth-context';
-import { useCart } from '../../../../context/cart-context';
+import { useShop } from '../../../../context/shop-context';
 import { getDiscountedPrice } from '../../../../utils/products';
 
 const ProductDetails = ({ product }) => {
   const navigate = useNavigate();
-  const { addToCart } = useCart();
+  const {
+    addToCart,
+    addToWishlist,
+    shop: {
+      wishlist: { wishlistItems },
+    },
+  } = useShop();
   const { user } = useAuth();
 
   return (
@@ -39,7 +45,15 @@ const ProductDetails = ({ product }) => {
         onClick={() => addToCart(user.encodedToken, product)}>
         ADD TO CART
       </div>
-      <div className='btn btn-sm btn-outlined btn-rounded'>ADD TO WISHLIST</div>
+      {wishlistItems.find((item) => item._id === product._id) ? (
+        <div className='py-xxs text-center'> Already in your Wishlist! </div>
+      ) : (
+        <div
+          className='btn btn-sm btn-outlined btn-rounded'
+          onClick={() => addToWishlist(user.encodedToken, product)}>
+          ADD TO WISHLIST
+        </div>
+      )}
       <div className='product-page-card-detail'>
         <span className='text-dark-light text-semibold'>Developer</span>
         <span>{product.publisher}</span>
