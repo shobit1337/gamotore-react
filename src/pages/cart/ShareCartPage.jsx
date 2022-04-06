@@ -1,60 +1,56 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { CartCard } from '../../components';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { PublicCartCard } from '../../components';
 import { useAuth } from '../../context/auth-context';
 import { useShop } from '../../context/shop-context';
-import { createPublicCart } from '../../utils/cart';
+import { getCartInfo, getPublicCart } from '../../utils/cart';
 
-const CartPage = () => {
-  const {
-    shop: {
-      cart: { cartItems, totalPrice, totalQuantity, totalDiscount },
-    },
-    clearCart,
-  } = useShop();
+const ShareCartPage = () => {
+  const { setCart } = useShop();
 
+  const { cartId } = useParams();
   const navigate = useNavigate();
+  const [publicCart, setPublicCart] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      if (cartId) {
+        const cart = await getPublicCart(cartId);
+        if (cart) {
+          setPublicCart({ cartItems: cart, ...getCartInfo(cart) });
+        } else navigate('/');
+      } else navigate('/');
+    })();
+  }, [cartId, navigate]);
 
   const {
     user: { encodedToken },
   } = useAuth();
-
-  const handleCreateCart = async () => {
-    const cart = await createPublicCart(cartItems);
-    // TODO: Open Model to copy the link
-    if (cart) navigate(`/cart/${cart._id}`);
-  };
-
-  return (
+  return !!publicCart?.cartItems.length ? (
     <>
       <h4 className='cart-title border-top pt-sm d-flex justify-between items-center gap-xs'>
-        My Cart {`( ${totalQuantity} Items )`}
+        {`Shared by ${
+          publicCart.sharedBy ? publicCart.sharedBy : 'Anonymous'
+        } `}
+        {`( ${publicCart.totalQuantity} Items )`}
       </h4>
 
       {/* Cart Container */}
       <div className='product-container'>
         <div className='cart-page-details'>
           <div className='d-flex justify-between items-center'>
-            {!!cartItems.length ? (
-              <>
-                {' '}
-                <button
-                  className='text-sm btn btn-xs btn-outlined btn-rounded btn-light text-light d-flex flex-center gap-xs'
-                  onClick={() => clearCart(encodedToken)}>
-                  Empty Cart<i className='fab fa-dropbox'></i>
-                </button>
-                <button
-                  className='text-sm btn btn-xs btn-outlined btn-rounded btn-light text-light d-flex flex-center gap-xs'
-                  onClick={handleCreateCart}>
-                  SHARE CART<i className='fas fa-share-alt'></i>
-                </button>
-              </>
-            ) : null}
+            <button
+              className='text-sm btn btn-xs btn-outlined btn-rounded btn-light text-light d-flex flex-center gap-xs'
+              onClick={() => setCart(encodedToken, publicCart.cartItems)}>
+              Save Cart<i className='fab fa-dropbox'></i>
+            </button>
           </div>
 
           {/* Cart Items */}
-          {cartItems.length
-            ? cartItems.map((item) => <CartCard key={item._id} cart={item} />)
+          {publicCart.cartItems.length
+            ? publicCart.cartItems.map((item) => (
+                <PublicCartCard key={item._id} cart={item} />
+              ))
             : null}
         </div>
 
@@ -63,17 +59,17 @@ const CartPage = () => {
           <div className='text-lg'>Games and Apps Summary</div>
           <div className='cart-page-card-detail'>
             <span className='text-dark-light text-semibold'>Price</span>
-            <span>₹{totalPrice}</span>
+            <span>₹{publicCart.totalPrice}</span>
           </div>
-          {totalDiscount > 0 ? (
+          {publicCart.totalDiscount > 0 ? (
             <div className='cart-page-card-detail'>
               <span className='text-dark-light text-semibold'>
                 Sale Discount
               </span>
-              <span>-₹{totalDiscount}</span>
+              <span>-₹{publicCart.totalDiscount}</span>
             </div>
           ) : null}
-          {totalPrice > 0 ? (
+          {publicCart.totalPrice > 0 ? (
             <>
               <div className='cart-page-card-detail'>
                 <span className='text-dark-light text-semibold'>Coupon</span>
@@ -97,9 +93,11 @@ const CartPage = () => {
           ) : null}
           <div className='cart-page-card-detail border-top'>
             <span className='text-dark-light text-semibold'>Subtotal</span>
-            <span>₹{(totalPrice - totalDiscount).toFixed(2)}</span>
+            <span>
+              ₹{(publicCart.totalPrice - publicCart.totalDiscount).toFixed(2)}
+            </span>
           </div>
-          {totalQuantity > 0 ? (
+          {publicCart.totalQuantity > 0 ? (
             <Link to='/checkout' className='btn'>
               CHECK OUT
             </Link>
@@ -107,7 +105,7 @@ const CartPage = () => {
         </div>
       </div>
     </>
-  );
+  ) : null;
 };
 
-export default CartPage;
+export default ShareCartPage;
