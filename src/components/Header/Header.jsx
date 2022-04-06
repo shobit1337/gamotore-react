@@ -1,10 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/auth-context';
 import { logout } from '../../store/auth/actions';
 
 const Header = () => {
   const { user, dispatchAuth } = useAuth();
+
+  const activeNav = { fontWeight: 600, color: 'var(--light-color)' };
   return (
     <header className=''>
       <nav>
@@ -13,25 +15,45 @@ const Header = () => {
         </div>
         <div className='nav-list'>
           <div className='nav-left'>
-            <Link to='/' className='nav-item'>
+            <NavLink
+              to='/'
+              style={({ isActive }) => (isActive ? activeNav : undefined)}
+              className='nav-item'>
               Store
-            </Link>
-            <Link to='/about' className='nav-item'>
+            </NavLink>
+            <NavLink
+              to='/about'
+              style={({ isActive }) => (isActive ? activeNav : undefined)}
+              className='nav-item'>
               About
-            </Link>
-            <Link to='/support' className='nav-item'>
+            </NavLink>
+            <NavLink
+              to='/support'
+              style={({ isActive }) => (isActive ? activeNav : undefined)}
+              className='nav-item'>
               Support
-            </Link>
+            </NavLink>
           </div>
-          <div className='nav-right'>
-            <span className='nav-item'>
-              <i className='fas fa-globe'></i>
-            </span>
+          <div className='nav-right d-flex items-center gap-sm'>
             {user.userDetails ? (
               <>
-                <Link to='/profile' className='nav-item'>
-                  <i className='fas fa-user mr-xxxs'></i>User
-                </Link>
+                <NavLink
+                  to='/profile'
+                  style={({ isActive }) => (isActive ? activeNav : undefined)}
+                  className='nav-item d-flex items-center gap-xxxs'>
+                  <div class='avatar avatar-xs avatar-circle'>
+                    {user.userDetails.displayImage ? (
+                      <img
+                        class='avatar-image'
+                        src={user.userDetails.displayImage}
+                        alt=''
+                      />
+                    ) : (
+                      <i className='fas fa-user mr-xxxs'></i>
+                    )}
+                  </div>
+                  {user.userDetails.displayName}
+                </NavLink>
                 <span
                   className='nav-item'
                   onClick={(e) => logout(dispatchAuth)}>
