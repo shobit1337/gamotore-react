@@ -1,5 +1,6 @@
 import React, { useContext, createContext, useEffect, useReducer } from 'react';
 import {
+  setCart,
   addToCart,
   addToWishlist,
   clearCart,
@@ -30,6 +31,7 @@ const ShopProvider = ({ children }) => {
     <ShopContext.Provider
       value={{
         shop,
+        setCart: setCart(dispatchShop),
         getCart: getCart(dispatchShop),
         addToCart: addToCart(dispatchShop),
         removeFromCart: removeFromCart(dispatchShop),

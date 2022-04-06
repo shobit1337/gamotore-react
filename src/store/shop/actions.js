@@ -9,6 +9,28 @@ import {
 import { SET_CART, SET_WISHLIST } from './action.types';
 
 // CART ACTION:
+// Set Cart
+export const setCart = (dispatch) => async (token, cartItems) => {
+  try {
+    let newCart = [...cartItems];
+    if (token) {
+      const {
+        data: { cart },
+      } = await axios.post(
+        '/api/user/cart/update',
+        { products: newCart },
+        { headers: { authorization: token } }
+      );
+      newCart = [...cart];
+    }
+    setToLocal('cartItems', newCart);
+    dispatch({ type: SET_CART, payload: { cartItems: newCart } });
+    return newCart;
+  } catch (error) {
+    throw new Error('Failed to Add Item to Cart.');
+  }
+};
+
 // Get Cart
 export const getCart = (dispatch) => async (token) => {
   try {

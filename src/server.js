@@ -12,6 +12,10 @@ import {
   updateCartItemHandler,
 } from './backend/controllers/CartController';
 import {
+  createPublicCartHandler,
+  getPublicCartHandler,
+} from './backend/controllers/PublicCartController';
+import {
   getAllCategoriesHandler,
   getCategoryHandler,
 } from './backend/controllers/CategoryController';
@@ -28,6 +32,7 @@ import {
 import { categories } from './backend/db/categories';
 import { products } from './backend/db/products';
 import { users } from './backend/db/users';
+import { publicCart } from './backend/db/publicCart';
 
 export function makeServer({ environment = 'development' } = {}) {
   return new Server({
@@ -38,6 +43,7 @@ export function makeServer({ environment = 'development' } = {}) {
     models: {
       product: Model,
       category: Model,
+      publicCart: Model,
       user: Model,
       cart: Model,
       wishlist: Model,
@@ -56,6 +62,7 @@ export function makeServer({ environment = 'development' } = {}) {
       );
 
       categories.forEach((item) => server.create('category', { ...item }));
+      publicCart.forEach((item) => server.create('publicCart', { ...item }));
     },
 
     routes() {
@@ -71,6 +78,10 @@ export function makeServer({ environment = 'development' } = {}) {
       // categories routes (public)
       this.get('/categories', getAllCategoriesHandler.bind(this));
       this.get('/categories/:categoryId', getCategoryHandler.bind(this));
+
+      // saved cart routes (public)
+      this.get('/cart/:cartId', getPublicCartHandler.bind(this));
+      this.post('/cart', createPublicCartHandler.bind(this));
 
       // cart routes (private)
       this.get('/user/cart', getCartItemsHandler.bind(this));

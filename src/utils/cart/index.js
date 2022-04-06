@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { getDiscountedPrice } from '../products';
 
 export const getFromLocal = (name) => {
@@ -79,4 +80,28 @@ export const filterDuplicates = (productList) => {
     }
     return false;
   });
+};
+
+// Share Pulic Cart:
+export const getPublicCart = async (cartId) => {
+  try {
+    const { data } = await axios.get(`/api/cart/${cartId}`);
+    if (data.cart) {
+      return data.cart.cartItems;
+    }
+  } catch (error) {
+    throw new Error('Failed to get public cart.');
+  }
+};
+
+// Create Public Cart:
+export const createPublicCart = async (cart) => {
+  try {
+    const { data } = await axios.post(`/api/cart`, { cart });
+    if (data.cart) {
+      return data.cart;
+    }
+  } catch (error) {
+    throw new Error('Failed to create public cart.');
+  }
 };

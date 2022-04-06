@@ -19,6 +19,7 @@ import {
   ForgetPasswordPage,
   LoginPage,
   SignupPage,
+  ShareCartPage,
 } from './pages';
 
 import { AuthRoute, PrivateRoute } from './components';
@@ -32,8 +33,9 @@ const Routes = () => {
           <Route path='/browse' element={<BrowseProductPage />} />
           <Route path='/product/:productId' element={<ProductPage />} />
           <Route path='/cart' element={<CartPage />} />
-          <Route path='/cart/:cartId' element={<CartPage />} />
+          <Route path='/cart/' element={<CartPage />} />
           <Route path='/wishlist' element={<WishlistPage />} />
+          <Route path='/cart/:cartId' element={<ShareCartPage />} />
 
           <Route element={<PrivateRoute />}>
             <Route path='/checkout' element={<CheckoutPage />} />
