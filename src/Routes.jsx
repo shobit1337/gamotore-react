@@ -20,6 +20,7 @@ import {
   LoginPage,
   SignupPage,
   ShareCartPage,
+  PageNotFound,
 } from './pages';
 
 import { AuthRoute, PrivateRoute } from './components';
@@ -41,13 +42,13 @@ const Routes = () => {
             <Route path='/checkout' element={<CheckoutPage />} />
             <Route path='/profile' element={<ProfilePage />} />
           </Route>
+          <Route path='*' element={<PageNotFound />} />
         </Route>
         <Route element={<AuthRoute />}>
           <Route path='/signup' element={<SignupPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/forgot-password' element={<ForgetPasswordPage />} />
         </Route>
-
         <Route path='/mockman' element={<Mockman />} />
       </RoutesContainer>
     </Router>
