@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { Response } from 'miragejs';
-import { formatDate } from '../utils/authUtils';
+import { formatDate, requiresAuth } from '../utils/authUtils';
 import bcrypt from 'bcryptjs';
 const jwt = require('jsonwebtoken');
 
@@ -92,6 +92,79 @@ export const loginHandler = function (schema, request) {
         ],
       }
     );
+  } catch (error) {
+    return new Response(
+      500,
+      {},
+      {
+        error,
+      }
+    );
+  }
+};
+
+/**
+ * This handler handles user data updation.
+ * send POST Request at /api/auth/update
+ * body contains {firstName, lastName, displayName, country, email, displayImage, oldPassword, newPassword}
+ * */
+
+export const updateUserHandler = function (schema, request) {
+  const userId = requiresAuth.call(this, request);
+
+  try {
+    if (!userId) {
+      new Response(
+        404,
+        {},
+        {
+          errors: ['The email you entered is not Registered. Not Found error'],
+        }
+      );
+    }
+    const foundUser = schema.users.findBy({ _id: userId });
+    const {
+      firstName,
+      lastName,
+      displayName,
+      country,
+      email,
+      displayImage,
+      oldPassword,
+      newPassword,
+    } = JSON.parse(request.requestBody);
+
+    if (bcrypt.compareSync(oldPassword, foundUser.password)) {
+      this.db.users.update(
+        { _id: userId },
+        {
+          firstName,
+          lastName,
+          displayName,
+          country,
+          email,
+          displayImage,
+          password: bcrypt.hashSync(newPassword ? newPassword : oldPassword, 5),
+        }
+      );
+      const updatedUser = schema.users.findBy({ _id: userId });
+      const encodedToken = jwt.sign(
+        { _id: updatedUser._id, email },
+        process.env.REACT_APP_JWT_SECRET
+      );
+      updatedUser.password = undefined;
+      return new Response(200, {}, { updatedUser, encodedToken });
+    } else {
+      return new Response(
+        401,
+        {},
+        {
+          errors: [
+            'The credentials you entered are invalid. Unauthorized access error.',
+          ],
+        }
+      );
+    }
   } catch (error) {
     return new Response(
       500,

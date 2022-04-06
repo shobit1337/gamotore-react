@@ -2,6 +2,7 @@ import { Server, Model, RestSerializer } from 'miragejs';
 import {
   loginHandler,
   signupHandler,
+  updateUserHandler,
 } from './backend/controllers/AuthController';
 import {
   addItemToCartHandler,
@@ -66,10 +67,13 @@ export function makeServer({ environment = 'development' } = {}) {
     },
 
     routes() {
+      this.passthrough('https://api.imgbb.com/');
       this.namespace = 'api';
       // auth routes (public)
       this.post('/auth/signup', signupHandler.bind(this));
       this.post('/auth/login', loginHandler.bind(this));
+      // auth route (private)
+      this.post('/auth/update', updateUserHandler.bind(this));
 
       // products routes (public)
       this.get('/products', getAllProductsHandler.bind(this));
@@ -102,6 +106,9 @@ export function makeServer({ environment = 'development' } = {}) {
         '/user/wishlist/:productId',
         removeItemFromWishlistHandler.bind(this)
       );
+
+      this.passthrough();
+      this.passthrough('https://api.imgbb.com/**');
     },
   });
 }
