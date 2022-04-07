@@ -19,3 +19,25 @@ export const getProduct = async (productId) => {
 
 export const getDiscountedPrice = (price, discount) =>
   discount > 0 ? parseFloat(((price * discount) / 100).toFixed(2)) : price;
+
+export const getPaginatedProducts = (products, page, limit) => {
+  page = Number(page);
+  limit = Number(limit);
+
+  const startIndex = limit * (page - 1);
+  const endIndex = limit * page;
+
+  const totalPages = Math.ceil(products.length / limit);
+  const nextPage = page + 1 <= totalPages ? page + 1 : 1;
+
+  return {
+    list: products.slice(startIndex, endIndex),
+    info: {
+      nextPage,
+      startIndex,
+      endIndex,
+      totalProducts: products.length,
+      totalPages,
+    },
+  };
+};
