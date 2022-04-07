@@ -21,6 +21,7 @@ import {
   SignupPage,
   ShareCartPage,
   PageNotFound,
+  OrderSuccessPage,
 } from './pages';
 
 import { AuthRoute, PrivateRoute } from './components';
@@ -42,6 +43,10 @@ const Routes = () => {
             <Route path='/checkout' element={<CheckoutPage />} />
             <Route path='/profile' element={<ProfilePage />} />
           </Route>
+          <Route
+            path='/order-success/:orderId'
+            element={<OrderSuccessPage />}
+          />
           <Route path='*' element={<PageNotFound />} />
         </Route>
         <Route element={<AuthRoute />}>

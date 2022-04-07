@@ -6,6 +6,7 @@ export { default as WishlistPage } from './wishlist/WishlistPage';
 export { default as CartPage } from './cart/CartPage';
 export { default as ShareCartPage } from './cart/ShareCartPage';
 export { default as CheckoutPage } from './checkout/CheckoutPage';
+export { default as OrderSuccessPage } from './order-success/OrderSuccessPage';
 
 export { default as ForgetPasswordPage } from './auth/ForgetPasswordPage';
 export { default as LoginPage } from './auth/LoginPage';
