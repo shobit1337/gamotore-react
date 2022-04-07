@@ -359,7 +359,7 @@ header > nav {
   position: relative;
 }
 
-.input-field-group > .add-coupon {
+.input-field-group > .apply-btn {
   position: absolute;
   right: 5px;
 }

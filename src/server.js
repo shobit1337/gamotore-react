@@ -31,9 +31,14 @@ import {
   setToWishlistHandler,
 } from './backend/controllers/WishlistController';
 import { categories } from './backend/db/categories';
+import { coupons } from './backend/db/coupons';
 import { products } from './backend/db/products';
 import { users } from './backend/db/users';
 import { publicCart } from './backend/db/publicCart';
+import {
+  getAllCouponsHandler,
+  useCouponHandler,
+} from './backend/controllers/CouponController';
 
 export function makeServer({ environment = 'development' } = {}) {
   return new Server({
@@ -44,6 +49,7 @@ export function makeServer({ environment = 'development' } = {}) {
     models: {
       product: Model,
       category: Model,
+      coupon: Model,
       publicCart: Model,
       user: Model,
       cart: Model,
@@ -63,6 +69,7 @@ export function makeServer({ environment = 'development' } = {}) {
       );
 
       categories.forEach((item) => server.create('category', { ...item }));
+      coupons.forEach((item) => server.create('coupon', { ...item }));
       publicCart.forEach((item) => server.create('publicCart', { ...item }));
     },
 
@@ -78,6 +85,10 @@ export function makeServer({ environment = 'development' } = {}) {
       // products routes (public)
       this.get('/products', getAllProductsHandler.bind(this));
       this.get('/products/:productId', getProductHandler.bind(this));
+
+      // coupons routes (public)
+      this.get('/coupons', getAllCouponsHandler.bind(this));
+      this.post('/coupon', useCouponHandler.bind(this));
 
       // categories routes (public)
       this.get('/categories', getAllCategoriesHandler.bind(this));

@@ -41,10 +41,10 @@ const Header = () => {
                   to='/profile'
                   style={({ isActive }) => (isActive ? activeNav : undefined)}
                   className='nav-item d-flex items-center gap-xxxs'>
-                  <div class='avatar avatar-xs avatar-circle'>
+                  <div className='avatar avatar-xs avatar-circle'>
                     {user.userDetails.displayImage ? (
                       <img
-                        class='avatar-image'
+                        className='avatar-image'
                         src={user.userDetails.displayImage}
                         alt=''
                       />

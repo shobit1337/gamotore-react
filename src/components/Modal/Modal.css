@@ -1,0 +1,16 @@
+.modal-container{
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  backdrop-filter: blur(2px);
+}
+.modal {
+  display:block;
+  position: absolute;
+  width: auto;
+  height: auto;
+  background-color: var(--dark-color);
+  border-radius: 0;
+  color: var(--light-color);
+  z-index: 15;
+}
