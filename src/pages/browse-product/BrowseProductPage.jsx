@@ -1,13 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Filters, Loader, ProductCard, SortByDropdown } from '../../components';
+import { Filters, ProductCard, SortByDropdown } from '../../components';
 import { useFilters } from '../../context/filter-context';
 import { filterList } from '../../utils/filters';
-import { getAllProducts } from '../../utils/products';
+import { getAllProducts, getPaginatedProducts } from '../../utils/products';
 
 const BrowseProductPage = () => {
   const { filters } = useFilters();
   const [productList, setProductList] = useState([]);
   const [filteredProduct, setFilteredProduct] = useState([]);
+
+  const [list, setList] = useState([]);
+
+  const [pageInfo, setPageInfo] = useState({
+    nextPage: 0,
+    startIndex: 0,
+    endIndex: 0,
+    totalProducts: 0,
+    totalPages: 0,
+  });
+
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    // Geting Paginated Results
+    const products = filters.appliedFilters > 0 ? filteredProduct : productList;
+    (async () => {
+      const data = await getPaginatedProducts(products, page, 6);
+      console.log('Got Paginated Data: ', data);
+      setList(data.list);
+      setPageInfo(data.info);
+    })();
+  }, [page, productList, filters, filteredProduct]);
 
   useEffect(() => {
     // Fetching the Products from Server and setting the state
@@ -43,16 +66,8 @@ const BrowseProductPage = () => {
             <SortByDropdown />
           </div>
           <div className='product-listing'>
-            {filters.appliedFilters ? (
-              !!filteredProduct.length ? (
-                filteredProduct.map((product) => (
-                  <ProductCard key={product._id} product={product} />
-                ))
-              ) : (
-                <div>No Matched Product Found</div>
-              )
-            ) : !!productList.length ? (
-              productList.map((product) => (
+            {!!list.length ? (
+              list.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))
             ) : (
@@ -63,17 +78,23 @@ const BrowseProductPage = () => {
             <div className='empty-card'></div>
             <div className='empty-card'></div>
           </div>
-          <Loader />
           {/* Pagination */}
+
           <div className='pagination'>
-            <span className='pagination-btn'>&laquo;</span>
-            <span className='pagination-btn'>1</span>
-            <span className='pagination-btn active'>2</span>
-            <span className='pagination-btn'>3</span>
-            <span className='pagination-btn'>4</span>
-            <span className='pagination-btn'>5</span>
-            <span className='pagination-btn'>6</span>
-            <span className='pagination-btn'>&raquo;</span>
+            {Array.from(Array(pageInfo.totalPages)).map((_, i) => {
+              const nextPage = i + 1;
+
+              return (
+                <span
+                  className={`pagination-btn ${
+                    nextPage === page ? 'active' : 'cursor-pointer'
+                  }`}
+                  key={nextPage}
+                  onClick={() => setPage(nextPage)}>
+                  {nextPage}
+                </span>
+              );
+            })}
           </div>
         </div>
         <Filters />
