@@ -3,23 +3,15 @@ import { REQUEST_AUTH, LOGIN, AUTH_ERROR, LOGOUT } from './action.types';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-export async function loginUser(dispatch, loginPayload) {
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      Accept: '*/*',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(loginPayload),
-  };
-
+export const loginUser = async (dispatch, loginPayload) => {
   try {
     dispatch({ type: REQUEST_AUTH });
-    let response = await fetch(`${API_URL}/auth/login`, requestOptions);
-    let data = await response.json();
+    const { data } = await axios.post(`${API_URL}/auth/login`, {
+      ...loginPayload,
+    });
 
     if (data.foundUser) {
-      let payload = {
+      const payload = {
         userDetails: data.foundUser,
         encodedToken: data.encodedToken,
       };
@@ -33,32 +25,24 @@ export async function loginUser(dispatch, loginPayload) {
   } catch (error) {
     dispatch({ type: AUTH_ERROR, error: error });
   }
-}
+};
 
-export async function logout(dispatch) {
+export const logout = async (dispatch) => {
   dispatch({ type: LOGOUT });
   localStorage.removeItem('currentUser');
   localStorage.removeItem('cartItems');
   localStorage.removeItem('wishlistItems');
-}
+};
 
-export async function signupUser(dispatch, loginPayload) {
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      Accept: '*/*',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(loginPayload),
-  };
-
+export const signupUser = async (dispatch, signupPayload) => {
   try {
     dispatch({ type: REQUEST_AUTH });
-    let response = await fetch(`${API_URL}/auth/signup`, requestOptions);
-    let data = response.json();
+    const { data } = await axios.post(`${API_URL}/auth/signup`, {
+      ...signupPayload,
+    });
 
     if (data.createdUser) {
-      let payload = {
+      const payload = {
         userDetails: data.createdUser,
         encodedToken: data.encodedToken,
       };
@@ -75,7 +59,7 @@ export async function signupUser(dispatch, loginPayload) {
   } catch (error) {
     dispatch({ type: AUTH_ERROR, error: error });
   }
-}
+};
 
 export const updateUser = async (dispatch, token, updatedUser) => {
   try {
@@ -83,7 +67,7 @@ export const updateUser = async (dispatch, token, updatedUser) => {
       headers: { authorization: token },
     });
     if (data.updatedUser) {
-      let payload = {
+      const payload = {
         userDetails: data.updatedUser,
         encodedToken: data.encodedToken,
       };
