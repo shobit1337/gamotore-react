@@ -18,21 +18,15 @@ const SignupPage = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
-    try {
-      let response = await signupUser(dispatchAuth, {
-        firstName: firstName.current.value,
-        lastName: lastName.current.value,
-        country: country.current.value,
-        userName: userName.current.value,
-        email: email.current.value,
-        password: password.current.value,
-      });
-      if (!response?.createdUser) return;
-      navigate(location.state?.from?.pathname || '/', { state: undefined });
-    } catch (error) {
-      console.error(error);
-    }
+    await signupUser(dispatchAuth, {
+      firstName: firstName.current.value,
+      lastName: lastName.current.value,
+      country: country.current.value,
+      displayName: userName.current.value,
+      email: email.current.value,
+      password: password.current.value,
+    });
+    navigate(location.state?.from?.pathname || '/', { state: undefined });
   };
 
   return (
