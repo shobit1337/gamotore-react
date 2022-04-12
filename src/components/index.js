@@ -13,4 +13,3 @@ export { default as ProductCard } from './Card/ProductCard';
 export { default as WishlistCard } from './Card/WishlistCard';
 
 export { default as PrivateRoute } from './PrivateRoute/PrivateRoute';
-export { default as AuthRoute } from './AuthRoute/AuthRoute';

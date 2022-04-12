@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo-light.svg';
 import { useAuth } from '../../context/auth-context';
 import { signupUser } from '../../store/auth/actions';
@@ -14,6 +14,7 @@ const SignupPage = () => {
 
   const { dispatchAuth } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -28,7 +29,7 @@ const SignupPage = () => {
         password: password.current.value,
       });
       if (!response?.createdUser) return;
-      navigate('/');
+      navigate(location.state?.from?.pathname || '/', { state: undefined });
     } catch (error) {
       console.error(error);
     }

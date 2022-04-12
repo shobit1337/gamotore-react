@@ -24,7 +24,7 @@ import {
   OrderSuccessPage,
 } from './pages';
 
-import { AuthRoute, PrivateRoute } from './components';
+import { PrivateRoute } from './components';
 
 const Routes = () => {
   return (
@@ -35,21 +35,20 @@ const Routes = () => {
           <Route path='/browse' element={<BrowseProductPage />} />
           <Route path='/product/:productId' element={<ProductPage />} />
           <Route path='/cart' element={<CartPage />} />
-          <Route path='/cart/' element={<CartPage />} />
-          <Route path='/wishlist' element={<WishlistPage />} />
           <Route path='/cart/:cartId' element={<ShareCartPage />} />
+          <Route path='/wishlist' element={<WishlistPage />} />
 
           <Route element={<PrivateRoute />}>
             <Route path='/checkout' element={<CheckoutPage />} />
             <Route path='/profile' element={<ProfilePage />} />
+            <Route
+              path='/order-success/:orderId'
+              element={<OrderSuccessPage />}
+            />
           </Route>
-          <Route
-            path='/order-success/:orderId'
-            element={<OrderSuccessPage />}
-          />
           <Route path='*' element={<PageNotFound />} />
         </Route>
-        <Route element={<AuthRoute />}>
+        <Route element={<PrivateRoute authRoute />}>
           <Route path='/signup' element={<SignupPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/forgot-password' element={<ForgetPasswordPage />} />

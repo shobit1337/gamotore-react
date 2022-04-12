@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth-context';
 import { loginUser } from '../../store/auth/actions';
 
@@ -7,6 +7,7 @@ const LoginPage = () => {
   const email = useRef('');
   const password = useRef('');
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, dispatchAuth } = useAuth();
 
   const handleLogin = async (e) => {
@@ -17,7 +18,7 @@ const LoginPage = () => {
         password: password.current.value,
       });
       if (!response?.foundUser) throw Error('No User Found');
-      navigate('/');
+      navigate(location.state?.from?.pathname || '/', { state: undefined });
     } catch (error) {
       console.error(error);
     }
