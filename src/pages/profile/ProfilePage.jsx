@@ -16,7 +16,7 @@ const ProfilePage = () => {
       const body = new FormData();
       body.append('image', selected);
       await fetch(
-        `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMG_API}}`,
+        `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMG_API}`,
         {
           method: 'POST',
           body: body,

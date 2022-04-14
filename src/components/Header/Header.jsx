@@ -1,4 +1,5 @@
 import React from 'react';
+import lightLogo from "../../assets/logo-light.svg"
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/auth-context';
 import { logout } from '../../store/auth/actions';
@@ -11,7 +12,7 @@ const Header = () => {
     <header className=''>
       <nav>
         <div className='nav-logo'>
-          <img src='/assets/gamotore-logo-light.svg' alt='' />
+          <img src={lightLogo} alt='' />
         </div>
         <div className='nav-list'>
           <div className='nav-left'>

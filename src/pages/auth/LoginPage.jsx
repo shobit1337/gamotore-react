@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import logo from '../../assets/logo-light.svg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth-context';
 import { loginUser } from '../../store/auth/actions';
@@ -40,7 +41,7 @@ const LoginPage = () => {
       className='bg-dark text-light d-flex flex-center'
       style={{ height: '100vh' }}>
       <div className='auth-card'>
-        <img src='/assets/gamotore-logo-light.svg' alt='' />
+        <img src={logo} alt='' />
         <h4 className='text-light'>Sign In</h4>
         {showError(user.errorMessage)}
         <input

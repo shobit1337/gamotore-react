@@ -131,13 +131,13 @@ header > nav {
 }
 
 .nav-logo {
-  height: 3.5rem;
+  height: inherit;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .nav-logo > img {
-  height: 80%;
+  height: 70%;
 }
 
 /* Category */
