@@ -1,24 +1,32 @@
 import React from 'react';
+import './Footer.css';
 
 const Footer = () => {
   return (
     <footer className='footer'>
       <div className='d-flex justify-between items-center text-lg'>
         <span className='d-flex gap-xxs'>
-          <a href='/'>
+          <a
+            href='https://github.com/shobit1337'
+            target='_blank'
+            rel='noreferrer'>
             <i className='fab fa-facebook-square'></i>
           </a>
-          <a href='/'>
+          <a
+            href='https://twitter.com/shobit1337'
+            target='_blank'
+            rel='noreferrer'>
             <i className='fab fa-twitter-square'></i>
           </a>
-          <a href='/'>
+          <a
+            href='https://peerlist.io/shobit1337'
+            target='_blank'
+            rel='noreferrer'>
             <i className='fab fa-youtube-square'></i>
           </a>
         </span>
-        <span>
-          <a href='/'>
-            <i className='far fa-caret-square-up'></i>
-          </a>
+        <span className='cursor-pointer' onClick={() => window.scrollTo(0, 0)}>
+          <i className='far fa-caret-square-up'></i>
         </span>
       </div>
       <div>
@@ -26,20 +34,40 @@ const Footer = () => {
         <div>
           <div className='d-flex gap-sm'>
             <div className='d-flex flex-column gap-xxxs'>
-              <a href='/'>Support-A-Creator</a>
-              <a href='/'>Publish on Epic Games</a>
-              <a href='/'>Careers</a>
-              <a href='/'>Company</a>
+              <a href='/' target='_blank' rel='noreferrer'>
+                Support-A-Creator
+              </a>
+              <a href='/' target='_blank' rel='noreferrer'>
+                Publish on Epic Games
+              </a>
+              <a href='/' target='_blank' rel='noreferrer'>
+                Careers
+              </a>
+              <a href='/' target='_blank' rel='noreferrer'>
+                Company
+              </a>
             </div>
             <div className='d-flex flex-column gap-xxxs'>
-              <a href='/'>Fan Art policy</a>
-              <a href='/'>UX Research</a>
-              <a href='/'>Store</a>
+              <a href='/' target='_blank' rel='noreferrer'>
+                Fan Art policy
+              </a>
+              <a href='/' target='_blank' rel='noreferrer'>
+                UX Research
+              </a>
+              <a href='/' target='_blank' rel='noreferrer'>
+                Store
+              </a>
             </div>
             <div className='d-flex flex-column gap-xxxs'>
-              <a href='/'>Online Services</a>
-              <a href='/'>Community Rules</a>
-              <a href='/'>Newsletter</a>
+              <a href='/' target='_blank' rel='noreferrer'>
+                Online Services
+              </a>
+              <a href='/' target='_blank' rel='noreferrer'>
+                Community Rules
+              </a>
+              <a href='/' target='_blank' rel='noreferrer'>
+                Newsletter
+              </a>
             </div>
           </div>
         </div>
@@ -48,14 +76,26 @@ const Footer = () => {
           <div>
             <div className='d-flex gap-sm'>
               <div className='d-flex flex-column gap-xxxs'>
-                <a href='/'>Fan Art policy</a>
-                <a href='/'>UX Research</a>
-                <a href='/'>Store</a>
+                <a href='/' target='_blank' rel='noreferrer'>
+                  Fan Art policy
+                </a>
+                <a href='/' target='_blank' rel='noreferrer'>
+                  UX Research
+                </a>
+                <a href='/' target='_blank' rel='noreferrer'>
+                  Store
+                </a>
               </div>
               <div className='d-flex flex-column gap-xxxs'>
-                <a href='/'>Online Services</a>
-                <a href='/'>Community Rules</a>
-                <a href='/'>Newsletter</a>
+                <a href='/' target='_blank' rel='noreferrer'>
+                  Online Services
+                </a>
+                <a href='/' target='_blank' rel='noreferrer'>
+                  Community Rules
+                </a>
+                <a href='/' target='_blank' rel='noreferrer'>
+                  Newsletter
+                </a>
               </div>
             </div>
           </div>
@@ -72,9 +112,15 @@ const Footer = () => {
       </div>
       <div className='d-flex justify-between items-center'>
         <span>
-          <a href='/'>Terms of Services</a>
-          <a href='/'>Privacy Policy</a>
-          <a href='/'>Store Refund Policy</a>
+          <a href='/' target='_blank' rel='noreferrer'>
+            Terms of Services
+          </a>
+          <a href='/' target='_blank' rel='noreferrer'>
+            Privacy Policy
+          </a>
+          <a href='/' target='_blank' rel='noreferrer'>
+            Store Refund Policy
+          </a>
         </span>
       </div>
     </footer>

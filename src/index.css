@@ -27,6 +27,7 @@ header > nav {
 .container {
   background-color: inherit;
   padding: 0 var(--space-xxxl);
+  min-height: 80vh;
 }
 
 .sticky-header {
@@ -232,22 +233,6 @@ header > nav {
 
 .product-card:hover .product-card-overlay {
   opacity: 1;
-}
-
-/* footer */
-.footer {
-  background-color: var(--dark-light);
-  padding: var(--space-md) var(--space-lg);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  font-size: var(--text-xs);
-}
-
-.footer-heading {
-  font-weight: 500;
-  color: var(--dark-lighter);
-  margin-top: var(--space-sm);
 }
 
 /* Product Page Styling */
