@@ -40,7 +40,7 @@ export const getCart = (dispatch) => async (token) => {
         headers: { authorization: token },
       });
       if (data.cart) {
-        if (newCart.length > 0) {
+        if (newCart.length !== data.cart.length) {
           newCart = removeDuplicateProducts([...data.cart, ...newCart]);
           // Updating New Cart to DB
           const {
@@ -211,7 +211,7 @@ export const getWishlist = (dispatch) => async (token) => {
         headers: { authorization: token },
       });
       if (data.wishlist) {
-        if (newWishlist.length > 0) {
+        if (newWishlist.length !== data.wishlist) {
           newWishlist = filterDuplicates([...data.wishlist, ...newWishlist]);
           // Updating New Wishlist to DB
           const {
@@ -272,9 +272,10 @@ export const removeFromWishlist = (dispatch) => async (token, productId) => {
   try {
     let newWishlist = [];
     if (token) {
-      const { data } = await axios.post(`/api/user/wishlist/${productId}`, {
+      const { data } = await axios.delete(`/api/user/wishlist/${productId}`, {
         headers: { authorization: token },
       });
+
       if (data.wishlist) {
         newWishlist = [...data.wishlist];
       }
