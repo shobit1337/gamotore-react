@@ -3,6 +3,7 @@ import {
   loginHandler,
   signupHandler,
   updateUserHandler,
+  validateUserHandler,
 } from './backend/controllers/AuthController';
 import {
   addItemToCartHandler,
@@ -79,6 +80,7 @@ export function makeServer({ environment = 'development' } = {}) {
       // auth routes (public)
       this.post('/auth/signup', signupHandler.bind(this));
       this.post('/auth/login', loginHandler.bind(this));
+      this.get('/auth/validate', validateUserHandler.bind(this));
       // auth route (private)
       this.post('/auth/update', updateUserHandler.bind(this));
 

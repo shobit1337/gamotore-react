@@ -3,6 +3,31 @@ import { REQUEST_AUTH, LOGIN, AUTH_ERROR, LOGOUT } from './action.types';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
+export const validateUser = async (dispatch, token) => {
+  try {
+    dispatch({ type: REQUEST_AUTH });
+    const { data } = await axios.get(`${API_URL}/auth/validate`, {
+      headers: { authorization: token },
+    });
+
+    if (data.foundUser) {
+      const payload = {
+        userDetails: data.foundUser,
+        encodedToken: data.encodedToken,
+      };
+      dispatch({ type: LOGIN, payload });
+      localStorage.setItem('authToken', data.encodedToken);
+      return payload;
+    }
+
+    dispatch({ type: AUTH_ERROR, error: data.errors[0] });
+    return;
+  } catch (error) {
+    localStorage.removeItem('authToken');
+    dispatch({ type: AUTH_ERROR, error: error });
+  }
+};
+
 export const loginUser = async (dispatch, loginPayload) => {
   try {
     dispatch({ type: REQUEST_AUTH });
@@ -16,8 +41,8 @@ export const loginUser = async (dispatch, loginPayload) => {
         encodedToken: data.encodedToken,
       };
       dispatch({ type: LOGIN, payload });
-      localStorage.setItem('currentUser', JSON.stringify(payload));
-      return data;
+      localStorage.setItem('authToken', data.encodedToken);
+      return payload;
     }
 
     dispatch({ type: AUTH_ERROR, error: data.errors[0] });
@@ -29,7 +54,7 @@ export const loginUser = async (dispatch, loginPayload) => {
 
 export const logout = async (dispatch) => {
   dispatch({ type: LOGOUT });
-  localStorage.removeItem('currentUser');
+  localStorage.removeItem('authToken');
   localStorage.removeItem('cartItems');
   localStorage.removeItem('wishlistItems');
 };
@@ -50,7 +75,7 @@ export const signupUser = async (dispatch, signupPayload) => {
         type: LOGIN,
         payload,
       });
-      localStorage.setItem('currentUser', JSON.stringify(payload));
+      localStorage.setItem('authToken', data.encodedToken);
       return data;
     }
 
@@ -75,7 +100,7 @@ export const updateUser = async (dispatch, token, updatedUser) => {
         type: LOGIN,
         payload,
       });
-      localStorage.setItem('currentUser', JSON.stringify(payload));
+      localStorage.setItem('authToken', data.encodedToken);
       return payload;
     }
   } catch (error) {

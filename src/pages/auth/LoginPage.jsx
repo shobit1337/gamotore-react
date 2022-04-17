@@ -18,7 +18,21 @@ const LoginPage = () => {
         email: email.current.value,
         password: password.current.value,
       });
-      if (!response?.foundUser) throw Error('No User Found');
+      if (!response?.userDetails) throw Error('No User Found');
+      navigate(location.state?.from?.pathname || '/', { state: undefined });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleTestLogin = async (e) => {
+    e.preventDefault();
+    try {
+      let response = await loginUser(dispatchAuth, {
+        email: 'test@test.com',
+        password: 'test',
+      });
+      if (!response?.userDetails) throw Error('No User Found');
       navigate(location.state?.from?.pathname || '/', { state: undefined });
     } catch (error) {
       console.error(error);
@@ -62,6 +76,11 @@ const LoginPage = () => {
         </span>
         <button className='btn btn-rounded text-light' onClick={handleLogin}>
           Sign In
+        </button>
+        <button
+          className='btn btn-accient btn-rounded text-light'
+          onClick={handleTestLogin}>
+          Test Sign In
         </button>
         <span>
           Forgot your password?

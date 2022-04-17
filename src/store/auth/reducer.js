@@ -1,13 +1,8 @@
 import { REQUEST_AUTH, LOGIN, AUTH_ERROR, LOGOUT } from './action.types';
 
-let currentUser = localStorage.getItem('currentUser');
-
-let userDetails = currentUser ? JSON.parse(currentUser).userDetails : '';
-let encodedToken = currentUser ? JSON.parse(currentUser).encodedToken : '';
-
 const initialState = {
-  userDetails: '' || userDetails,
-  encodedToken: '' || encodedToken,
+  userDetails: '',
+  encodedToken: '',
   loading: false,
   errorMessage: null,
 };
