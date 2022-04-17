@@ -1,16 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Filters.css';
 import { useFilters } from '../../context/filter-context';
 import { ListAccordion } from './components';
 
 const Filters = () => {
   const {
-    filters: { appliedFilters, price, platform, categoryName },
+    filters: { appliedFilters, price, platform, categoryName, searchName },
     filterByPlatform,
     filterByCategory,
     filterByPrice,
+    filterBySearch,
     clearFilters,
   } = useFilters();
+  const [search, setSearch] = useState('');
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    filterBySearch(e.target.value);
+  };
+
+  useEffect(() => {
+    setSearch(searchName);
+  }, [searchName]);
+
+  useEffect(() => {
+    return () => {
+      clearFilters();
+    };
+  }, []);
 
   return (
     <div className='filters-container'>
@@ -24,7 +41,13 @@ const Filters = () => {
       </div>
       <div className='input-text-group input-rounded'>
         <i className='fas fa-search'></i>
-        <input type='text' placeholder='Keywords' className='input-field' />
+        <input
+          type='text'
+          placeholder='Keywords'
+          className='input-field'
+          value={search}
+          onChange={handleSearch}
+        />
       </div>
       <ListAccordion title={'Price'}>
         <li

@@ -4,6 +4,7 @@ import {
   FILTER_BY_PRICE,
   FILTER_BY_SORT,
   CLEAR_FILTERS,
+  FILTER_BY_SEARCH,
 } from './action.types';
 
 export const filterByPlatform = (filters, dispatch) => (filter) => {
@@ -59,6 +60,12 @@ export const filterBySort = (filters, dispatch) => (filter) => {
       payload: newSort,
     });
   }
+};
+
+export const filterBySearch = (filters, dispatch) => (search) => {
+  const newSearchName = search.trim('');
+
+  dispatch({ type: FILTER_BY_SEARCH, payload: { searchName: newSearchName } });
 };
 
 export const clearFilters = (dispatch) => () => {

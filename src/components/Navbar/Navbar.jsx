@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useShop } from '../../context/shop-context';
+import { Search } from '../';
 
 const Navbar = () => {
   const {
@@ -11,10 +12,7 @@ const Navbar = () => {
   const activeNav = { fontWeight: 600, color: 'var(--light-color)' };
   return (
     <div className='sticky-header text-dark-light text-medium'>
-      <div className='input-text-group'>
-        <i className='fas fa-search'></i>
-        <input type='text' placeholder='Search' className='input-field' />
-      </div>
+      <Search />
       <div
         className='d-flex justify-between items-center'
         style={{ width: '100%' }}>

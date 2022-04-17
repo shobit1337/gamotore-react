@@ -50,6 +50,7 @@ const BrowseProductPage = () => {
     if (filters.appliedFilters === 0) {
       setFilteredProduct([]);
     }
+    setPage(1);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [productList, filters]);
 
