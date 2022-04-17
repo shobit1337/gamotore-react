@@ -17,11 +17,11 @@ const CartPage = () => {
   const navigate = useNavigate();
 
   const {
-    user: { encodedToken },
+    user: { encodedToken, userDetails },
   } = useAuth();
 
   const handleCreateCart = async () => {
-    const cart = await createPublicCart(cartItems);
+    const cart = await createPublicCart(userDetails?.displayName, cartItems);
     // TODO: Open Model to copy the link
     if (cart) navigate(`/cart/${cart._id}`);
   };

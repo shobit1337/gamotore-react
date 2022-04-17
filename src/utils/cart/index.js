@@ -87,7 +87,7 @@ export const getPublicCart = async (cartId) => {
   try {
     const { data } = await axios.get(`/api/cart/${cartId}`);
     if (data.cart) {
-      return data.cart.cartItems;
+      return data.cart;
     }
   } catch (error) {
     throw new Error('Failed to get public cart.');
@@ -95,9 +95,11 @@ export const getPublicCart = async (cartId) => {
 };
 
 // Create Public Cart:
-export const createPublicCart = async (cart) => {
+export const createPublicCart = async (sharedBy = '', cart) => {
   try {
-    const { data } = await axios.post(`/api/cart`, { cart });
+    const { data } = await axios.post(`/api/cart`, {
+      cart: { cartItems: cart, sharedBy },
+    });
     if (data.cart) {
       return data.cart;
     }

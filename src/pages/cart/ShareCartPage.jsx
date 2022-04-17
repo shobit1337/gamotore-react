@@ -17,7 +17,7 @@ const ShareCartPage = () => {
       if (cartId) {
         const cart = await getPublicCart(cartId);
         if (cart) {
-          setPublicCart({ cartItems: cart, ...getCartInfo(cart) });
+          setPublicCart({ ...cart, ...getCartInfo(cart.cartItems) });
         } else navigate('/');
       } else navigate('/');
     })();
@@ -28,10 +28,11 @@ const ShareCartPage = () => {
   } = useAuth();
   return !!publicCart?.cartItems.length ? (
     <>
-      <h4 className='cart-title border-top pt-sm d-flex justify-between items-center gap-xs'>
-        {`Shared by ${
+      <h4 className='cart-title border-top pt-sm d-flex items-center gap-xs'>
+        Shared by{' '}
+        <span className='text-underline'>{`${
           publicCart.sharedBy ? publicCart.sharedBy : 'Anonymous'
-        } `}
+        } `}</span>
         {`( ${publicCart.totalQuantity} Items )`}
       </h4>
 
@@ -71,20 +72,6 @@ const ShareCartPage = () => {
           ) : null}
           {publicCart.totalPrice > 0 ? (
             <>
-              <div className='cart-page-card-detail'>
-                <span className='text-dark-light text-semibold'>Coupon</span>
-                <div className='input-field-group'>
-                  <input
-                    type='text'
-                    className='coupon-input'
-                    placeholder='Enter coupon'
-                  />
-                  <button className='add-coupon text-primary text-xs link'>
-                    ADD
-                  </button>
-                </div>
-              </div>
-
               <div className='cart-page-card-detail'>
                 <span className='text-dark-light text-semibold'>Taxes</span>
                 <span>Calculated at Checkout</span>
