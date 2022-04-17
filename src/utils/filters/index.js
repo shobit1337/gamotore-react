@@ -1,7 +1,7 @@
 export const filterList = (list, filters) => {
   // Filter by Platform
 
-  const newList = list.filter((item) => {
+  let newList = list.filter((item) => {
     if (
       filters.platform.length > 0 &&
       !filters.platform.every((filter) => item.platform.includes(filter))
@@ -51,6 +51,8 @@ export const filterList = (list, filters) => {
     return true;
   });
 
+  newList = searchItems(newList, filters.searchName);
+
   if (filters.sort.type === 'ASCENDING') {
     switch (filters.sort.by) {
       case 'PRICE':
@@ -91,6 +93,13 @@ export const filterList = (list, filters) => {
   return newList;
 };
 
+export const searchItems = (searchList, searchName) =>
+  searchName
+    ? searchList.filter((searchItem) =>
+        searchItem.title.toLowerCase().includes(searchName.toLowerCase())
+      )
+    : searchList;
+
 export const getFiltersCount = (filters) => {
   let count = 0;
   if (filters.price?.type) {
@@ -103,6 +112,9 @@ export const getFiltersCount = (filters) => {
     count += filters.categoryName.length;
   }
   if (filters.sort.by) {
+    count += 1;
+  }
+  if (filters.searchName) {
     count += 1;
   }
   return count;

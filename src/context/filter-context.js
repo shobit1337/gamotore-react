@@ -6,6 +6,7 @@ import {
   filterByPrice,
   clearFilters,
   filterBySort,
+  filterBySearch,
 } from '../store/filters/actions';
 import { filtersReducer, initialState } from '../store/filters/reducer';
 
@@ -28,6 +29,7 @@ const FiltersProvider = ({ children }) => {
         filterByCategory: filterByCategory(filters, dispatchFilters),
         filterByPrice: filterByPrice(filters, dispatchFilters),
         filterBySort: filterBySort(filters, dispatchFilters),
+        filterBySearch: filterBySearch(filters, dispatchFilters),
         clearFilters: clearFilters(dispatchFilters),
       }}>
       {children}
