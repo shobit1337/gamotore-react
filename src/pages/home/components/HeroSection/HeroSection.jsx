@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../../context/auth-context';
+import { useShop } from '../../../../context/shop-context';
 
 const HeroSection = ({ products }) => {
   const [heroItems, setHeroItems] = useState([...products]);
+  const { addToWishlist } = useShop();
+  const { user } = useAuth();
   const [activeItem, setActiveItem] = useState(0);
   const navigate = useNavigate();
 
@@ -22,7 +26,9 @@ const HeroSection = ({ products }) => {
   if (heroItems.length)
     return (
       <div className='hero-section'>
-        <div className='hero-image'>
+        <div
+          className='hero-image'
+          onClick={() => navigate(`/product/${heroItems[activeItem]._id}`)}>
           <img src={heroItems[activeItem].largeImages[0]} alt='' />
           <div className='hero-image-overflow'>
             <div>Out Now</div>
@@ -39,7 +45,12 @@ const HeroSection = ({ products }) => {
                 }>
                 Learn More
               </button>
-              <button className='btn btn-light btn-xs btn-outlined cursor-pointer'>
+              <button
+                className='btn btn-light btn-xs btn-outlined cursor-pointer'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addToWishlist(user.encodedToken, heroItems[activeItem]);
+                }}>
                 Add to Wishlist
               </button>
             </div>
