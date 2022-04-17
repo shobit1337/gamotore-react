@@ -57,6 +57,19 @@ const HeroSection = ({ products }) => {
           </div>
         </div>
 
+        <div className='hero-list-dot'>
+          {heroItems.length
+            ? heroItems.map((item, index) => (
+                <div
+                  className={`hero-item-dot ${
+                    index === activeItem ? 'active' : ''
+                  }`}
+                  key={item._id}
+                  onClick={() => setActiveItem(index)}></div>
+              ))
+            : null}
+        </div>
+
         <div className='hero-list'>
           {heroItems.length
             ? heroItems.map((item, index) => (

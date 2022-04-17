@@ -61,36 +61,6 @@ const ProductPage = () => {
             <div className='product-description'>
               {productDetails.description}
             </div>
-            <div className='product-heading'>PLAY AS A MERCENARY OUTLAW</div>
-            <div className='product-description'>
-              Become a cyberpunk, an urban mercenary equipped with cybernetic
-              enhancements and build your legend on the streets of Night City.
-            </div>
-            <div className='product-heading'>
-              EXPLORE THE CITY OF THE FUTURE
-            </div>
-            <div className='product-description'>
-              Night City is packed to the brim with things to do, places to see,
-              and people to meet. And it’s up to you where to go, when to go,
-              and how to get there.
-            </div>
-            <div className='product-heading'>BUILD YOUR LEGEND</div>
-            <div className='product-description'>
-              Go on daring adventures and build relationships with unforgettable
-              characters whose fates are shaped by the choices you make.
-            </div>
-            <div className='product-heading'>EQUIPPED WITH IMPROVEMENTS</div>
-            <div className='product-description'>
-              Experience Cyberpunk 2077 with a host of changes and improvements
-              to gameplay and economy, the city, map usage, and more.
-            </div>
-            <div className='product-heading'>
-              INCLUDES FREE ADDITIONAL CONTENT
-            </div>
-            <div className='product-description'>
-              Get your hands on a haul of free items including new guns and
-              melee weapons, as well as extra customization options and more.
-            </div>
           </>
         </div>
         <ProductDetails product={productDetails} />

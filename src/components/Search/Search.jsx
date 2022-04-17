@@ -25,7 +25,7 @@ const Search = () => {
   }, [search]);
 
   return (
-    <div className='search-container' tabIndex='0' ref={ref}>
+    <div className='search-container hide-mobile' tabIndex='0' ref={ref}>
       <div className='input-text-group'>
         <i className='fas fa-search'></i>
         <input

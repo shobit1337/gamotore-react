@@ -13,7 +13,7 @@ const WishlistCard = ({ wishlist }) => {
     <div className='cart-card'>
       <img src={wishlist.thumbnailImage} alt='wishlist-thumbnail' />
       <div className='d-flex flex-column justify-between flex-grow'>
-        <div className='d-flex justify-between'>
+        <div className='d-flex justify-between flex-wrap gap-sm'>
           <div className='d-flex gap-xxxs flex-column'>
             <div className='badge'>BASE GAME</div>
             <div className='product-name'>{wishlist.title}</div>
@@ -43,12 +43,12 @@ const WishlistCard = ({ wishlist }) => {
 
         <div className='d-flex justify-between items-center'>
           <i className='fab fa-windows'></i>
-          <div className='d-flex items-center gap-sm'>
-            <button
-              className='link text-dark-lighter'
+          <div className='d-flex items-center gap-sm flex-wrap justify-center'>
+            <span
+              className='text-dark-lighter cursor-pointer'
               onClick={() => removeFromWishlist(encodedToken, wishlist._id)}>
               Remove
-            </button>
+            </span>
             <button
               className='btn btn-outlined btn-rounded btn-light btn-sm'
               onClick={() => moveToCart(encodedToken, wishlist)}>

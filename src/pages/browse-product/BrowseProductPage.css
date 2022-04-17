@@ -1,0 +1,7 @@
+.browse-product-container{
+  margin: var(--space-md) 0;
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  gap: var(--space-md);
+}

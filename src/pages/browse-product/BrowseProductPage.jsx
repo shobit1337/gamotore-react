@@ -3,7 +3,7 @@ import { Filters, ProductCard, SortByDropdown } from '../../components';
 import { useFilters } from '../../context/filter-context';
 import { filterList } from '../../utils/filters';
 import { getAllProducts, getPaginatedProducts } from '../../utils/products';
-
+import './BrowseProductPage.css';
 const BrowseProductPage = () => {
   const { filters } = useFilters();
   const [productList, setProductList] = useState([]);
@@ -59,7 +59,7 @@ const BrowseProductPage = () => {
       <h4 className='cart-title border-top py-sm'>Browse</h4>
 
       {/* Product Listing Container  */}
-      <div className='product-container'>
+      <div className='browse-product-container'>
         <div className='product-listing-container'>
           <div className='text-sm text-dark-lighter py-xs'>
             Sort By:

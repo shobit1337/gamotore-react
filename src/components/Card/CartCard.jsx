@@ -1,25 +1,31 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth-context';
 import { useShop } from '../../context/shop-context';
 import { getDiscountedPrice } from '../../utils/products';
 
 const CartCard = ({ cart }) => {
+  const navigate = useNavigate();
   const { removeFromCart, updateCart, moveToWishlist } = useShop();
   const {
     user: { encodedToken },
   } = useAuth();
   return (
-    <div className='cart-card flex-wrap'>
-      <img src={cart.thumbnailImage} alt='' />
+    <div className='cart-card'>
+      <img
+        src={cart.thumbnailImage}
+        alt=''
+        onClick={() => navigate(`/product/${cart._id}`)}
+      />
       <div className='d-flex flex-column justify-between flex-grow'>
-        <div className='d-flex justify-between flex-wrap'>
+        <div className='d-flex justify-between gap-sm flex-wrap'>
           <div className='d-flex gap-xxxs flex-column'>
             <div className='badge'>BASE GAME</div>
             <div className='product-name'>{cart.title}</div>
           </div>
 
           <div className='d-flex gap-xxxs flex-column'>
-            <div className='d-flex items-center justify-between gap-sm'>
+            <div className='d-flex items-center flex-wrap gap-sm'>
               {cart.discount ? (
                 <>
                   <span className='badge'>-{cart.discount}%</span>
@@ -52,7 +58,7 @@ const CartCard = ({ cart }) => {
             <div className='d-flex items-center gap-sm'>
               <span>
                 <i
-                  className='fas fa-minus-circle'
+                  className='fas fa-minus-circle  cursor-pointer'
                   onClick={() =>
                     updateCart(encodedToken, cart._id, 'decrement')
                   }></i>
@@ -60,13 +66,13 @@ const CartCard = ({ cart }) => {
               <span>{cart.quantity}</span>
               <span>
                 <i
-                  className='fas fa-plus-circle'
+                  className='fas fa-plus-circle  cursor-pointer'
                   onClick={() =>
                     updateCart(encodedToken, cart._id, 'increment')
                   }></i>
               </span>
             </div>
-            <div className='d-flex items-center gap-sm'>
+            <div className='d-flex items-center gap-sm flex-wrap justify-center cursor-pointer'>
               <span onClick={() => moveToWishlist(encodedToken, cart)}>
                 Move to wishlish
               </span>

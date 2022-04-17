@@ -29,7 +29,8 @@ const Navbar = () => {
           </NavLink>
           <NavLink
             style={({ isActive }) => (isActive ? activeNav : undefined)}
-            to='/news'>
+            to='/news'
+            className='hide-mobile'>
             News
           </NavLink>
         </span>

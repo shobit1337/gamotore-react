@@ -74,7 +74,7 @@ const ProfilePage = () => {
             }}
             value={formData.country}
           />
-          <span className='d-flex gap-sm'>
+          <span className='d-flex gap-sm flex-wrap'>
             <input
               className='input-text'
               type='text'

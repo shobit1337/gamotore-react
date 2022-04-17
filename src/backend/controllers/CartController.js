@@ -200,9 +200,9 @@ export const updateCartItemHandler = function (schema, request) {
  * */
 
 export const clearCartHandler = function (schema, request) {
-  const user = requiresAuth.call(this, request);
+  const userId = requiresAuth.call(this, request);
   try {
-    if (!user) {
+    if (!userId) {
       return new Response(
         404,
         {},
@@ -211,7 +211,7 @@ export const clearCartHandler = function (schema, request) {
         }
       );
     }
-    this.db.users.update({ cart: [] });
+    this.db.users.update({ _id: userId }, { cart: [] });
     return new Response(200, {}, { cart: [] });
   } catch (error) {
     return new Response(
