@@ -40,6 +40,11 @@ import {
   getAllCouponsHandler,
   useCouponHandler,
 } from './backend/controllers/CouponController';
+import {
+  addAddressHandler,
+  getAddressHandler,
+  removeAddressHandler,
+} from './backend/controllers/AddressController';
 
 export function makeServer({ environment = 'development' } = {}) {
   return new Server({
@@ -55,6 +60,7 @@ export function makeServer({ environment = 'development' } = {}) {
       user: Model,
       cart: Model,
       wishlist: Model,
+      address: Model,
     },
 
     // Runs on the start of the server
@@ -65,9 +71,7 @@ export function makeServer({ environment = 'development' } = {}) {
         server.create('product', { ...item });
       });
 
-      users.forEach((item) =>
-        server.create('user', { ...item, cart: [], wishlist: [], address: [] })
-      );
+      users.forEach((item) => server.create('user', { ...item }));
 
       categories.forEach((item) => server.create('category', { ...item }));
       coupons.forEach((item) => server.create('coupon', { ...item }));
@@ -119,6 +123,11 @@ export function makeServer({ environment = 'development' } = {}) {
         '/user/wishlist/:productId',
         removeItemFromWishlistHandler.bind(this)
       );
+
+      // Address routes (private)
+      this.get('/user/address', getAddressHandler.bind(this));
+      this.post('/user/address', addAddressHandler.bind(this));
+      this.delete('/user/address/:addressId', removeAddressHandler.bind(this));
 
       this.passthrough();
       this.passthrough('https://api.imgbb.com/**');

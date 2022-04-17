@@ -20,6 +20,7 @@ export const users = [
     updatedAt: formatDate(),
     cart: [],
     wishlist: [],
+    address: [],
   },
   {
     _id: '06fa2f68-0b0a-469b-bcc3-e024a949995e',
@@ -34,6 +35,20 @@ export const users = [
     updatedAt: formatDate(),
     cart: [],
     wishlist: [],
+    address: [
+      {
+        _id: 'a8e4ec5b-ce2e-4b44-82cf-1868d0c1810e',
+        city: 'Banglore',
+        country: 'India',
+        createdAt: '2022-04-17T21:59:13+05:30',
+        name: 'Ram Aggarwal',
+        phone: '+91-9876543210',
+        pin: '25890',
+        state: 'Karnataka',
+        street: 'xyz, ramdom street',
+        updatedAt: '2022-04-17T21:59:13+05:30',
+      },
+    ],
   },
   {
     _id: '9b21d331-f466-4b3e-863e-f6eb3954fa55',
@@ -48,5 +63,6 @@ export const users = [
     updatedAt: formatDate(),
     cart: [],
     wishlist: [],
+    address: [],
   },
 ];

@@ -58,7 +58,7 @@ const ProfilePage = () => {
 
   return formData.email ? (
     <>
-      <h3 className='cart-title border-top py-sm'>{`Welcome ${formData.firstName} ${formData.lastName},`}</h3>
+      <h3 className='cart-title border-top py-sm'>{`Welcome ${user.userDetails.firstName} ${user.userDetails.lastName},`}</h3>
 
       {/* <!-- Profile Container --> */}
       <div className='profile-container flex-wrap'>
