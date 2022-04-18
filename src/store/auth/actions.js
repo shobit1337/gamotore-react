@@ -3,29 +3,46 @@ import { REQUEST_AUTH, LOGIN, AUTH_ERROR, LOGOUT } from './action.types';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-export async function loginUser(dispatch, loginPayload) {
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      Accept: '*/*',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(loginPayload),
-  };
-
+export const validateUser = async (dispatch, token) => {
   try {
     dispatch({ type: REQUEST_AUTH });
-    let response = await fetch(`${API_URL}/auth/login`, requestOptions);
-    let data = await response.json();
+    const { data } = await axios.get(`${API_URL}/auth/validate`, {
+      headers: { authorization: token },
+    });
 
     if (data.foundUser) {
-      let payload = {
+      const payload = {
         userDetails: data.foundUser,
         encodedToken: data.encodedToken,
       };
       dispatch({ type: LOGIN, payload });
-      localStorage.setItem('currentUser', JSON.stringify(payload));
-      return data;
+      localStorage.setItem('authToken', data.encodedToken);
+      return payload;
+    }
+
+    dispatch({ type: AUTH_ERROR, error: data.errors[0] });
+    return;
+  } catch (error) {
+    localStorage.removeItem('authToken');
+    dispatch({ type: AUTH_ERROR, error: error });
+  }
+};
+
+export const loginUser = async (dispatch, loginPayload) => {
+  try {
+    dispatch({ type: REQUEST_AUTH });
+    const { data } = await axios.post(`${API_URL}/auth/login`, {
+      ...loginPayload,
+    });
+
+    if (data.foundUser) {
+      const payload = {
+        userDetails: data.foundUser,
+        encodedToken: data.encodedToken,
+      };
+      dispatch({ type: LOGIN, payload });
+      localStorage.setItem('authToken', data.encodedToken);
+      return payload;
     }
 
     dispatch({ type: AUTH_ERROR, error: data.errors[0] });
@@ -33,32 +50,24 @@ export async function loginUser(dispatch, loginPayload) {
   } catch (error) {
     dispatch({ type: AUTH_ERROR, error: error });
   }
-}
+};
 
-export async function logout(dispatch) {
+export const logout = async (dispatch) => {
   dispatch({ type: LOGOUT });
-  localStorage.removeItem('currentUser');
+  localStorage.removeItem('authToken');
   localStorage.removeItem('cartItems');
   localStorage.removeItem('wishlistItems');
-}
+};
 
-export async function signupUser(dispatch, loginPayload) {
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      Accept: '*/*',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(loginPayload),
-  };
-
+export const signupUser = async (dispatch, signupPayload) => {
   try {
     dispatch({ type: REQUEST_AUTH });
-    let response = await fetch(`${API_URL}/auth/signup`, requestOptions);
-    let data = response.json();
+    const { data } = await axios.post(`${API_URL}/auth/signup`, {
+      ...signupPayload,
+    });
 
     if (data.createdUser) {
-      let payload = {
+      const payload = {
         userDetails: data.createdUser,
         encodedToken: data.encodedToken,
       };
@@ -66,7 +75,7 @@ export async function signupUser(dispatch, loginPayload) {
         type: LOGIN,
         payload,
       });
-      localStorage.setItem('currentUser', JSON.stringify(payload));
+      localStorage.setItem('authToken', data.encodedToken);
       return data;
     }
 
@@ -75,7 +84,7 @@ export async function signupUser(dispatch, loginPayload) {
   } catch (error) {
     dispatch({ type: AUTH_ERROR, error: error });
   }
-}
+};
 
 export const updateUser = async (dispatch, token, updatedUser) => {
   try {
@@ -83,7 +92,7 @@ export const updateUser = async (dispatch, token, updatedUser) => {
       headers: { authorization: token },
     });
     if (data.updatedUser) {
-      let payload = {
+      const payload = {
         userDetails: data.updatedUser,
         encodedToken: data.encodedToken,
       };
@@ -91,7 +100,7 @@ export const updateUser = async (dispatch, token, updatedUser) => {
         type: LOGIN,
         payload,
       });
-      localStorage.setItem('currentUser', JSON.stringify(payload));
+      localStorage.setItem('authToken', data.encodedToken);
       return payload;
     }
   } catch (error) {

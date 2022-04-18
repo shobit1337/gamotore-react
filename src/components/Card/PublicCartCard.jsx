@@ -9,17 +9,17 @@ const PublicCartCard = ({ cart }) => {
     user: { encodedToken },
   } = useAuth();
   return (
-    <div className='cart-card flex-wrap'>
+    <div className='cart-card'>
       <img src={cart.thumbnailImage} alt='' />
       <div className='d-flex flex-column justify-between flex-grow'>
-        <div className='d-flex justify-between flex-wrap'>
+        <div className='d-flex justify-between flex-wrap gap-sm'>
           <div className='d-flex gap-xxxs flex-column'>
             <div className='badge'>BASE GAME</div>
             <div className='product-name'>{cart.title}</div>
           </div>
 
           <div className='d-flex gap-xxxs flex-column'>
-            <div className='d-flex items-center justify-between gap-sm'>
+            <div className='d-flex items-center justify-between gap-sm flex-wrap'>
               {cart.discount ? (
                 <>
                   <span className='badge'>-{cart.discount}%</span>
@@ -40,7 +40,7 @@ const PublicCartCard = ({ cart }) => {
           </div>
         </div>
 
-        <div className='d-flex justify-between items-end'>
+        <div className='d-flex items-end'>
           <span>
             {' '}
             {cart.platform.includes('windows') ? (

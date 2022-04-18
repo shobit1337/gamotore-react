@@ -1,23 +1,40 @@
-import { createContext, useContext, useReducer, useEffect } from 'react';
+import {
+  createContext,
+  useState,
+  useContext,
+  useReducer,
+  useEffect,
+} from 'react';
+import { validateUser } from '../store/auth/actions';
 import { authReducer, initialState } from '../store/auth/reducer';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, dispatchAuth] = useReducer(authReducer, initialState);
+  const [isValidating, setIsValidating] = useState(true);
 
   const isLoggedIn = () => (user.userDetails ? true : false);
 
   useEffect(() => {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if (currentUser?.userDetails && currentUser?.encodedToken) {
-      dispatchAuth({ type: 'LOGIN', payload: currentUser });
-    }
-  }, [dispatchAuth]);
+    const authToken = localStorage.getItem('authToken');
+    (async () => {
+      setIsValidating(true);
+      if (authToken) {
+        await validateUser(dispatchAuth, authToken);
+      }
+      setIsValidating(false);
+    })();
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user, dispatchAuth, isLoggedIn }}>
-      {children}
+    <AuthContext.Provider
+      value={{
+        user,
+        dispatchAuth,
+        isLoggedIn,
+      }}>
+      {!isValidating ? children : null}
     </AuthContext.Provider>
   );
 };

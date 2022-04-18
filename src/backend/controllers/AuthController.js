@@ -175,3 +175,43 @@ export const updateUserHandler = function (schema, request) {
     );
   }
 };
+
+export const validateUserHandler = function (schema, request) {
+  const userId = requiresAuth.call(this, request);
+
+  try {
+    if (!userId) {
+      new Response(
+        404,
+        {},
+        {
+          errors: ['The email you entered is not Registered. Not Found error'],
+        }
+      );
+    }
+    const foundUser = schema.users.findBy({ _id: userId });
+    if (foundUser) {
+      const encodedToken = jwt.sign(
+        { _id: foundUser._id, email: foundUser.email },
+        process.env.REACT_APP_JWT_SECRET
+      );
+      return new Response(200, {}, { foundUser, encodedToken });
+    } else {
+      return new Response(
+        401,
+        {},
+        {
+          errors: ['Invalid/Expired Token. Unauthorized access error.'],
+        }
+      );
+    }
+  } catch (error) {
+    return new Response(
+      500,
+      {},
+      {
+        error,
+      }
+    );
+  }
+};

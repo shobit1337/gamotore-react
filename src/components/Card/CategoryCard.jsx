@@ -1,12 +1,20 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useFilters } from '../../context/filter-context';
 
 const CategoryCard = ({ category }) => {
+  const { filterByCategory } = useFilters();
+  const navigate = useNavigate();
+  const handleGoToCategory = (category) => {
+    filterByCategory(category);
+    navigate('/browse');
+  };
+
   return (
-    <div className='category-card cursor-pointer'>
-      <img
-        src='https://cdn1.epicgames.com/dda64c2956b54f1ba3cd97f6aaee775f/offer/EGS_TotalWarWARHAMMERIII_CreativeAssembly_S6-1200x1600-bf935f14317eaf51f4906079a2888ced.jpg'
-        alt=''
-      />
+    <div
+      className='category-card cursor-pointer'
+      onClick={() => handleGoToCategory(category.categoryName)}>
+      <img src={category.thumbnailImage} alt='' />
       <span className='category-name'>{category.categoryName}</span>
     </div>
   );

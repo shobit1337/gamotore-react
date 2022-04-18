@@ -16,7 +16,7 @@ const ProfilePage = () => {
       const body = new FormData();
       body.append('image', selected);
       await fetch(
-        `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMG_API}}`,
+        `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMG_API}`,
         {
           method: 'POST',
           body: body,
@@ -58,7 +58,7 @@ const ProfilePage = () => {
 
   return formData.email ? (
     <>
-      <h3 className='cart-title border-top py-sm'>{`Welcome ${formData.firstName} ${formData.lastName},`}</h3>
+      <h3 className='cart-title border-top py-sm'>{`Welcome ${user.userDetails.firstName} ${user.userDetails.lastName},`}</h3>
 
       {/* <!-- Profile Container --> */}
       <div className='profile-container flex-wrap'>
@@ -74,7 +74,7 @@ const ProfilePage = () => {
             }}
             value={formData.country}
           />
-          <span className='d-flex gap-sm'>
+          <span className='d-flex gap-sm flex-wrap'>
             <input
               className='input-text'
               type='text'

@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import logo from '../../assets/logo-light.svg';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth-context';
 import { loginUser } from '../../store/auth/actions';
 
@@ -7,6 +8,7 @@ const LoginPage = () => {
   const email = useRef('');
   const password = useRef('');
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, dispatchAuth } = useAuth();
 
   const handleLogin = async (e) => {
@@ -16,8 +18,22 @@ const LoginPage = () => {
         email: email.current.value,
         password: password.current.value,
       });
-      if (!response?.foundUser) throw Error('No User Found');
-      navigate('/');
+      if (!response?.userDetails) throw Error('No User Found');
+      navigate(location.state?.from?.pathname || '/', { state: undefined });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleTestLogin = async (e) => {
+    e.preventDefault();
+    try {
+      let response = await loginUser(dispatchAuth, {
+        email: 'test@test.com',
+        password: 'test',
+      });
+      if (!response?.userDetails) throw Error('No User Found');
+      navigate(location.state?.from?.pathname || '/', { state: undefined });
     } catch (error) {
       console.error(error);
     }
@@ -39,7 +55,7 @@ const LoginPage = () => {
       className='bg-dark text-light d-flex flex-center'
       style={{ height: '100vh' }}>
       <div className='auth-card'>
-        <img src='/assets/gamotore-logo-light.svg' alt='' />
+        <img src={logo} alt='' />
         <h4 className='text-light'>Sign In</h4>
         {showError(user.errorMessage)}
         <input
@@ -60,6 +76,11 @@ const LoginPage = () => {
         </span>
         <button className='btn btn-rounded text-light' onClick={handleLogin}>
           Sign In
+        </button>
+        <button
+          className='btn btn-accient btn-rounded text-light'
+          onClick={handleTestLogin}>
+          Test Sign In
         </button>
         <span>
           Forgot your password?

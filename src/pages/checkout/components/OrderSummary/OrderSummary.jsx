@@ -9,14 +9,29 @@ import {
   getGSTAmount,
 } from '../../../../utils/checkout';
 
-const OrderSummary = ({ checkoutSummary }) => {
+const OrderSummary = ({ checkoutSummary, selectedAddress }) => {
   const navigate = useNavigate();
   const { clearCart } = useShop();
   const { price, discount, couponDiscount, finalAmount } = checkoutSummary;
   const [finalBillAmount, setFinalBillAmount] = useState(0);
+  const [error, setError] = useState('');
   const {
     user: { userDetails },
   } = useAuth();
+
+  const handleCheckout = () => {
+    if (finalBillAmount > 0) {
+      if (selectedAddress?._id) {
+        setError('');
+        displayRazorpay(finalBillAmount, userDetails, onSuccess);
+      } else setError('Please Select an address.');
+    } else {
+      if (selectedAddress?._id) {
+        setError('');
+        onSuccess('not required for free orders');
+      } else setError('Please Select an address.');
+    }
+  };
 
   function onSuccess(response) {
     const orderId = response.razorpay_payment_id || response;
@@ -28,7 +43,9 @@ const OrderSummary = ({ checkoutSummary }) => {
   }
 
   useEffect(() => {
-    setFinalBillAmount(finalAmount - getGSTAmount(finalAmount));
+    setFinalBillAmount(
+      parseFloat((finalAmount + getGSTAmount(finalAmount)).toFixed(2))
+    );
   }, [finalAmount]);
 
   return (
@@ -60,19 +77,13 @@ const OrderSummary = ({ checkoutSummary }) => {
         <span className='text-dark-light text-semibold'>Final Amount</span>
         <span>₹{finalBillAmount}</span>
       </div>
-      {/* <button className='btn text-sm'>Pay With Card</button> */}
+      {error ? <span className='text-danger'>{error}</span> : null}
       {finalBillAmount > 0 ? (
-        <button
-          className='btn btn-secondary text-sm'
-          onClick={() =>
-            displayRazorpay(finalBillAmount, userDetails, onSuccess)
-          }>
+        <button className='btn btn-secondary text-sm' onClick={handleCheckout}>
           Pay using Razorpay
         </button>
       ) : (
-        <button
-          className='btn btn-secondary text-sm'
-          onClick={() => onSuccess('not required for free orders')}>
+        <button className='btn btn-secondary text-sm' onClick={handleCheckout}>
           Confirm your order
         </button>
       )}

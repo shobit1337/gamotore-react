@@ -1,11 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../../../context/auth-context';
 import { useShop } from '../../../../context/shop-context';
 import { getDiscountedPrice } from '../../../../utils/products';
 
 const ProductDetails = ({ product }) => {
-  const navigate = useNavigate();
   const {
     addToCart,
     addToWishlist,
@@ -28,18 +27,29 @@ const ProductDetails = ({ product }) => {
       <div>
         <span className={product.discount > 0 ? 'mrp-price' : null}>
           {product.price > 0 ? `₹${product.price}` : 'FREE'}
-        </span>
+        </span>{' '}
         {product.discount > 0 ? (
           <span className='current-price'>
             ₹{getDiscountedPrice(product.price, product.discount)}
           </span>
         ) : null}
       </div>
-      <div
+      <Link
         className='btn btn-accient btn-rounded'
-        onClick={() => navigate('/checkout')}>
+        to='/checkout'
+        state={{
+          checkout: {
+            price: product.price,
+            discount: getDiscountedPrice(product.price, product.discount),
+            couponDiscount: 0,
+            finalAmount:
+              product.price -
+              getDiscountedPrice(product.price, product.discount),
+          },
+        }}>
         BUY NOW
-      </div>
+      </Link>
+
       <div
         className='btn btn-outlined btn-rounded'
         onClick={() => addToCart(user.encodedToken, product)}>

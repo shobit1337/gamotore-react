@@ -35,7 +35,7 @@ export const createPublicCartHandler = function (schema, request) {
     // check if email already exists
     const _id = nanoid(10);
     const newCart = {
-      cartItems: cart,
+      ...cart,
       _id,
       createdAt: formatDate(),
     };

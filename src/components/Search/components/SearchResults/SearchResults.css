@@ -1,0 +1,27 @@
+.search-results-container{
+  position: absolute;
+  top: 100%;
+  width: max-content;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--dark-light);
+  color: var(--light-color);
+  padding: var(--space-xxxs) var(--space-xs);
+}
+
+.search-item{
+  color: var(--dark-lightest);
+  margin: var(--space-xxxs) 0;
+  cursor: pointer;
+}
+.search-item:hover{
+  color: var(--light-lighter);
+}
+
+.search-btn{
+  background-color: transparent;
+  color: var(--light-color);
+  border: 1px solid var(--light-color);
+  padding: var(--space-xxs);
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import lightLogo from '../../assets/logo-light.svg';
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/auth-context';
 import { logout } from '../../store/auth/actions';
@@ -10,9 +11,9 @@ const Header = () => {
   return (
     <header className=''>
       <nav>
-        <div className='nav-logo'>
-          <img src='/assets/gamotore-logo-light.svg' alt='' />
-        </div>
+        <NavLink to='/' className='nav-logo'>
+          <img src={lightLogo} alt='' />
+        </NavLink>
         <div className='nav-list'>
           <div className='nav-left'>
             <NavLink
@@ -55,7 +56,7 @@ const Header = () => {
                   {user.userDetails.displayName}
                 </NavLink>
                 <span
-                  className='nav-item'
+                  className='nav-item cursor-pointer'
                   onClick={(e) => logout(dispatchAuth)}>
                   <i className='fas fa-sign-out-alt mr-xxxs'></i>LOG OUT
                 </span>
